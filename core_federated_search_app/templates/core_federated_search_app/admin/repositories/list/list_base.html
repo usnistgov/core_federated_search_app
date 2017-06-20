@@ -1,0 +1,57 @@
+{% extends 'core_main_app/_render/admin/theme/tools/box.html' %}
+
+{% block box_title %}List all repositories{% endblock %}
+
+{% block box_tools %}
+<div class="btn-group pull-right">
+<a href="{% url 'admin:core_federated_search_app_repositories_add'%}" class="btn btn-default add-repository-btn">
+    <i class="fa fa-plus-circle"></i> Add Repository
+</a>
+</div>
+{% endblock %}
+
+{% block box_body %}
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>Instance Name</th>
+            <th>Instance URL</th>
+            <th>Token expires</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for instance in data.instance_list %}
+            {% cycle 'even' '' as rowcolors silent %}
+            <tr class="{{ rowcolors }}">
+                <td>{{ instance.name }}</td>
+                <td>{{ instance.endpoint }}</td>
+                <td>{{ instance.expires }}</td>
+                <td id="{{ instance.id }}">
+                    {% block box_actions %}
+                        <span class="icon legend edit">
+                            <a class="btn btn-default" href="#"><i class="fa fa-edit"></i> Edit </a>
+                        </span>
+                        <span class="icon legend refresh">
+                            <a class="btn btn-default" href="#"><i class="fa fa-refresh"></i> Refresh Token </a>
+                        </span>
+                        <span class="icon legend delete">
+                            <a class="btn btn-danger" href="#"><i class="fa fa-trash"></i> Delete </a>
+                        </span>
+                    {% endblock %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td class="empty" colspan="4">
+                    There are currently no other repositories registered. Please
+                    <a href="{% url 'admin:core_federated_search_app_repositories_add'%}"
+                       class="add-repository-btn">add a new one</a>.
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+{% block box_footer %}
+{% endblock %}

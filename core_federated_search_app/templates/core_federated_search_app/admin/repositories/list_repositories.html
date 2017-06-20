@@ -1,0 +1,12 @@
+{% extends "core_main_app/_render/admin/theme/tools/section.html" %}
+{% load staticfiles %}
+
+{% block section_title %}Federated Search{% endblock %}
+
+{% block section_content %}
+  <div class="row">
+      <div class="col-md-12">
+        {% include 'core_federated_search_app/admin/repositories/list/list_base.html' %}
+      </div>
+  </div>
+{% endblock %}

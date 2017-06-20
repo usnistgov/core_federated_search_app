@@ -12,9 +12,3 @@ INSTALLED_APPS = [
   'core_federated_search_app',
 ]
 ```
-
-2. Include the core_federated_search_app URLconf in your project urls.py like this::
-
-```python
-    url(r'^federated_search/', include("core_federated_search_app.urls")),
-```

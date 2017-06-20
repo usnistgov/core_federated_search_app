@@ -1,0 +1,24 @@
+{% extends 'core_main_app/_render/admin/theme/tools/modal.html' %}
+
+{% block modal_id %}refresh-repository-modal{% endblock %}
+{% block modal_title %}Refresh Token{% endblock %}
+
+{% block modal_body %}
+    <form id="refresh-repository-form">
+        <input id="refresh-repository-id" type="hidden" value=""/>
+    </form>
+
+    <div id="error-div">
+        <br/>
+        <div class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><span id="error-message"></span></strong>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block modal_footer %}
+    <a class="btn btn-default pull-left" data-dismiss="modal" href="#"><i class="fa fa-times"></i> Close</a>
+    <a id="refresh-repository-save" class="btn btn-primary" href="#"><i class="fa fa-refresh"></i> Refresh</a>
+{% endblock %}

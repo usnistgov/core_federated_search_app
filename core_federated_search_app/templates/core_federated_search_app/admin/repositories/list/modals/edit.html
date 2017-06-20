@@ -1,0 +1,27 @@
+<!-- FIXME: SIMILAR WITH TEMPLATE, NEED AN .HTML BASE reusable -->
+{% extends 'core_main_app/_render/admin/theme/tools/modal.html' %}
+
+{% block modal_id %}edit-repository-modal{% endblock %}
+{% block modal_title %}Edit Repository{% endblock %}
+
+{% block modal_body %}
+<div id="edit-error-div">
+    <br/>
+    <div class="alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong><span id="edit-error-message"></span></strong>
+    </div>
+</div>
+<form id="edit-repository-form">
+    <input id="edit-repository-id" type="hidden" value=""/>
+    <div class="form-group">
+        <label for="edit-repository-name">Enter new {{ data.object_name }} name</label>
+        <input id="edit-repository-name" class="form-control" type="text" value="" placeholder="new_repository_name"/>
+    </div>
+</form>
+{% endblock %}
+
+{% block modal_footer %}
+<a class="btn btn-default pull-left" data-dismiss="modal" href="#"><i class="fa fa-times"></i> Close</a>
+<a id="edit-repository-save" class="btn btn-primary" href="#"><i class="fa fa-save"></i> Save</a>
+{% endblock %}

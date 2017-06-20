@@ -1,0 +1,17 @@
+<!-- FIXME: SIMILAR WITH TEMPLATE, NEED AN .HTML BASE reusable -->
+
+{% extends 'core_main_app/_render/admin/theme/tools/modal.html' %}
+
+{% block modal_id %}delete-repository-modal{% endblock %}
+{% block modal_title %}Delete <strong><span class="delete-repository-name"></span></strong>{% endblock %}
+
+{% block modal_body %}
+    <input id="delete-repository-id" type="hidden" value=""/>
+    <p>Are you sure you want to delete this repository?</p>
+{% endblock %}
+
+{% block modal_footer %}
+    <a class="btn btn-default pull-left" data-dismiss="modal" href="#"><i class="fa fa-times"></i> No </a>
+    <a id="delete-repository-yes" class="btn btn-danger" href="#"><i class="fa fa-check">
+    </i> Yes </a>
+{% endblock %}
