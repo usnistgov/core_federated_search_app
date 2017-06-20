@@ -5,6 +5,7 @@ from django.template import RequestContext, loader
 from datetime import datetime, timedelta
 from core_explore_common_app.utils.protocols.oauth2 import post_refresh_token
 from core_federated_search_app.commons.exceptions import ExploreFederatedSearchAjaxError
+from core_main_app.views.common.forms import RenameForm
 import core_federated_search_app.views.admin.forms as admin_forms
 import core_federated_search_app.components.instance.api as instance_api
 import json
@@ -34,9 +35,49 @@ def edit_repository(request):
 
     """
     try:
-        instance = instance_api.get_by_id(request.POST['id'])
-        instance.name = request.POST['title']
-        instance_api.upsert(instance)
+        if request.method == 'POST':
+            return _edit_repository_post(request)
+        else:
+            return _edit_repository_get(request)
+    except Exception as e:
+        return HttpResponseBadRequest(e.message)
+
+
+def _edit_repository_get(request):
+    """ Edit GET. Display the form
+
+    Args:
+        request:
+
+    Returns:
+
+    """
+    context_params = dict()
+    template = loader.get_template('core_federated_search_app/admin/repositories/list/modals/edit_form.html')
+    data = {'id': request.GET['id'], 'field': request.GET['name']}
+    rename_form = RenameForm(data)
+    context_params['rename_form'] = rename_form
+    context = RequestContext(request, context_params)
+    return HttpResponse(json.dumps({'template': template.render(context)}), content_type='application/javascript')
+
+
+def _edit_repository_post(request):
+    """ Edit POST. Post the form
+
+    Args:
+        request:
+
+    Returns:
+
+    """
+    try:
+        form = RenameForm(request.POST)
+        if form.is_valid():
+            instance = instance_api.get_by_id(request.POST['id'])
+            instance.name = request.POST['field']
+            instance_api.upsert(instance)
+        else:
+            raise ExploreFederatedSearchAjaxError("All fields are required.")
     except Exception, e:
         return HttpResponseBadRequest(e.message, content_type='application/javascript')
     return HttpResponse(json.dumps({}), content_type='application/javascript')

@@ -14,25 +14,42 @@ editRepositoryOpenModal = function(event) {
     var repositoryName = $(this).parent().siblings(':first').text();
     var repositoryId = $(this).parent().attr('id');
 
-    $("#edit-repository-name").val(repositoryName);
-    $("#edit-repository-id").val(repositoryId);
-    $('#edit-error-div').hide();
-    $("#edit-repository-modal").modal("show");
+    $.ajax({
+        url : editRepositoryPostUrl,
+        type : "GET",
+        dataType: "json",
+        data : {
+            'id': repositoryId,
+            'name': repositoryName
+        },
+        success: function(data){
+            $("#rename-form-receiver").html(data.template);
+            $('#edit-error-div').hide();
+            $("#edit-repository-modal").modal("show");
+        },
+        error:function(data){
+            if (data.responseText != ""){
+                showErrorMessage(data.responseText);
+            }else{
+                return (true);
+            }
+        }
+    });
 };
 
 editRepositorySave = function(event) {
     event.preventDefault();
 
-    var repositoryId = $("#edit-repository-id").val();
-    var repositoryName = $("#edit-repository-name").val();
+    $('#edit-error-div').hide();
+    var formData = new FormData($( "#edit-repository-form" )[0]);
 
     $.ajax({
         url : editRepositoryPostUrl,
         type : "POST",
-        data: {
-            "id": repositoryId,
-            "title": repositoryName
-        },
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
         success: function(data){
             location.reload();
         },
