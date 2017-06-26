@@ -1,9 +1,10 @@
 """ Instance api
 """
-import requests
-from datetime import datetime
+from datetime import datetime, timedelta
+from core_explore_common_app.utils.protocols.oauth2 import post_request_token, post_refresh_token
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.exceptions import ApiError
+import json
 
 
 def get_all():
@@ -63,8 +64,39 @@ def upsert(instance):
     return instance.save_object()
 
 
-def request_token(instance, client_id, client_secret, timeout=1000):
-    """ Create the instance by requesting a token.
+def add_instance(name, endpoint, client_id, client_secret, user, password, timeout):
+    """ Request the remote and add the instance created.
+
+    Args:
+        name:
+        endpoint:
+        client_id:
+        client_secret:
+        user:
+        password:
+        timeout:
+
+    Returns:
+
+    """
+    # Request the remote
+    r = post_request_token(endpoint, client_id, client_secret,
+                           timeout, user, password)
+
+    if r.status_code == 200:
+        # create the instance from a request
+        instance = _create_instance_object_from_request_response(name,
+                                                                 endpoint,
+                                                                 r.content)
+
+        # upsert the instance
+        return upsert(instance)
+    else:
+        raise ApiError("Unable to get access to the remote instance using these parameters.")
+
+
+def refresh_instance_token(instance, client_id, client_secret, timeout):
+    """ Refresh the instance token.
 
     Args:
         instance:
@@ -75,43 +107,60 @@ def request_token(instance, client_id, client_secret, timeout=1000):
     Returns:
 
     """
-    url = _get_url_for_request(instance)
-    headers = {'content-type': 'application/x-www-form-urlencoded'}
-    data = {
-        'grant_type': 'password',
-        'username': instance.username,
-        'password': instance.password,
-        'client_id': client_id,
-        'client_secret': client_secret,
-    }
-    response = requests.post(url=url, data=data, headers=headers, timeout=timeout)
-    if response.status_code == 200:
-        _update_instance_token_from_response(instance, response)
+    # Request the remote
+    r = post_refresh_token(instance.endpoint, client_id, client_secret,
+                           timeout, instance.refresh_token)
+
+    if r.status_code == 200:
+        # create the instance from a request
+        instance = _update_instance_object_from_request_response(instance, r.content)
+
+        # upsert the instance
+        return upsert(instance)
     else:
         raise ApiError("Unable to get access to the remote instance using these parameters.")
 
 
-def refresh_token(instance, timeout=1000):
-    """ Refresh the instance token.
+def _create_instance_object_from_request_response(name, endpoint, content):
+    """ Create an Instance object from a request.
 
     Args:
-        instance:
-        timeout:
+        name:
+        endpoint:
+        content:
 
     Returns:
 
     """
-    url = _get_url_for_request(instance)
-    data = "&grant_type=refresh_token&refresh_token=" + instance.refresh_token
-    headers = {'content-type': 'application/x-www-form-urlencoded'}
-    response = requests.post(url=url, data=data,
-                             headers=headers,
-                             auth=(instance.client_id, instance.client_secret),
-                             timeout=timeout)
-    if response.status_code == 200:
-        _update_instance_token_from_response(instance, response)
-    else:
-        raise ApiError("Unable to get access to the remote instance using these parameters.")
+    # Calculate the expiration date
+    now = datetime.now()
+    delta = timedelta(seconds=int(json.loads(content)["expires_in"]))
+    expires = now + delta
+    # Create an instance with the response given by the remote server
+    return Instance(name=name, endpoint=endpoint,
+                    access_token=json.loads(content)["access_token"],
+                    refresh_token=json.loads(content)["refresh_token"], expires=expires)
+
+
+def _update_instance_object_from_request_response(instance, content):
+    """ Update an instance object from a response content.
+
+        Args:
+            instance:
+            content:
+
+        Returns:
+
+        """
+    # Calculate the expiration date
+    now = datetime.now()
+    delta = timedelta(seconds=int(json.loads(content)["expires_in"]))
+    expires = now + delta
+    # Update an return the instance object
+    instance.access_token = json.loads(content)["access_token"]
+    instance.refresh_token = json.loads(content)["refresh_token"]
+    instance.expires = expires
+    return instance
 
 
 def _get_url_for_request(instance):
