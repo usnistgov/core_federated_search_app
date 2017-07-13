@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from core_explore_common_app.utils.protocols.oauth2 import post_request_token, post_refresh_token
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.exceptions import ApiError
+from urlparse import urlparse
 import json
 
 
@@ -79,6 +80,15 @@ def add_instance(name, endpoint, client_id, client_secret, user, password, timeo
     Returns:
 
     """
+    try:
+        # parse the endpoint
+        endpoint = urlparse(endpoint).geturl().strip('/')
+    except:
+        raise ApiError("Endpoint is not well formatted.")
+
+    # delete extra white space
+    name = name.strip()
+
     # Request the remote
     r = post_request_token(endpoint, client_id, client_secret,
                            timeout, user, password)

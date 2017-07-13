@@ -2,6 +2,8 @@
 """
 from django import forms
 
+from core_main_app.commons.validators import BlankSpacesValidator
+
 # list of possible protocols available in the form
 PROTOCOLS = (('http', 'HTTP'),
              ('https', 'HTTPS'))
@@ -11,9 +13,10 @@ class RepositoryForm(forms.Form):
     """ Form to register a new repository.
     """
     name = forms.CharField(label='Instance Name', max_length=100, required=True,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
-    endpoint = forms.CharField(label='Endpoint', required=True,
-                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+                           widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           validators=[BlankSpacesValidator()])
+    endpoint = forms.URLField(label='Endpoint', required=True,
+                              widget=forms.URLInput(attrs={'class': 'form-control'}))
     username = forms.CharField(label='Username', max_length=100, required=True,
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}),
