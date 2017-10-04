@@ -1,12 +1,14 @@
 """ Ajax admin
 """
+import json
+
 from django.http.response import HttpResponse, HttpResponseBadRequest
-from django.template import RequestContext, loader
+from django.template import loader
+
+import core_federated_search_app.components.instance.api as instance_api
+import core_federated_search_app.views.admin.forms as admin_forms
 from core_federated_search_app.commons.exceptions import ExploreFederatedSearchAjaxError
 from core_main_app.views.common.forms import RenameForm
-import core_federated_search_app.views.admin.forms as admin_forms
-import core_federated_search_app.components.instance.api as instance_api
-import json
 
 
 def delete_repository(request):
@@ -55,7 +57,9 @@ def _edit_repository_get(request):
     data = {'id': request.GET['id'], 'field': request.GET['name']}
     rename_form = RenameForm(data)
     context_params['rename_form'] = rename_form
-    context = RequestContext(request, context_params)
+    context = {}
+    context.update(request)
+    context.update(context_params)
     return HttpResponse(json.dumps({'template': template.render(context)}), content_type='application/javascript')
 
 
@@ -138,5 +142,7 @@ def _refresh_repository_get(request):
     template = loader.get_template('core_federated_search_app/admin/repositories/list/refresh_form.html')
     refresh_form = admin_forms.RefreshRepositoryForm()
     context_params['refresh_form'] = refresh_form
-    context = RequestContext(request, context_params)
+    context = {}
+    context.update(request)
+    context.update(context_params)
     return HttpResponse(json.dumps({'template': template.render(context)}), content_type='application/javascript')
