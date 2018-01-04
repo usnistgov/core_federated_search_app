@@ -1,2 +1,2 @@
-core-explore-common-app==1.0.0-alpha5
-core-main-app==1.0.0-alpha5
+core-explore-common-app==1.0.0-alpha6
+core-main-app==1.0.0-alpha6
