@@ -84,3 +84,11 @@ class Instance(Document):
         """
         if self.name.upper() == "LOCAL":
             raise exceptions.ModelError("By default, the instance named Local is the instance currently running.")
+
+    def clean(self):
+        """ Clean is called before saving
+
+        Returns:
+
+        """
+        self.name = self.name.strip()
