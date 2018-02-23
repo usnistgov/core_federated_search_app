@@ -65,7 +65,7 @@ def upsert(instance):
     return instance.save_object()
 
 
-def add_instance(name, endpoint, client_id, client_secret, user, password, timeout):
+def add_instance(name, endpoint, client_id, client_secret, username, password, timeout):
     """ Request the remote and add the instance created.
 
     Args:
@@ -73,7 +73,7 @@ def add_instance(name, endpoint, client_id, client_secret, user, password, timeo
         endpoint:
         client_id:
         client_secret:
-        user:
+        username:
         password:
         timeout:
 
@@ -91,7 +91,7 @@ def add_instance(name, endpoint, client_id, client_secret, user, password, timeo
 
     # Request the remote
     r = post_request_token(endpoint, client_id, client_secret,
-                           timeout, user, password)
+                           timeout, username, password)
 
     if r.status_code == 200:
         # create the instance from a request
