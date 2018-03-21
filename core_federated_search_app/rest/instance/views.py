@@ -14,21 +14,20 @@ from core_main_app.utils.decorators import api_staff_member_required
 
 
 class InstanceList(APIView):
-    """
-        List all instances, or create a new instance.
+    """ List all instances, or create a new instance.
     """
 
     def get(self, request):
         """ Return http response with all instances.
 
-            GET /rest/instance
+        GET /rest/instance
 
-            Args:
-                request:
+        Args:
+            request:
 
-            Returns:
+        Returns:
 
-            """
+        """
         try:
             # Get object
             instance_object_list = instance_api.get_all()
@@ -46,6 +45,8 @@ class InstanceList(APIView):
     def post(self, request):
         """ Save an instance.
 
+        Example::
+
             POST /rest/instance
             {
                 "name": "instance_name",
@@ -57,12 +58,12 @@ class InstanceList(APIView):
                 "password": "pwd"
             }
 
-            Args:
-                request:
+        Args:
+            request:
 
-            Returns:
+        Returns:
 
-            """
+        """
         try:
             # Build serializer
             instance_serializer = InstanceSerializerCreate(data=request.data)
@@ -80,8 +81,7 @@ class InstanceList(APIView):
 
 
 class InstanceDetail(APIView):
-    """"
-        Retrieve, edit or delete an instance.
+    """" Retrieve, edit or delete an instance.
     """
 
     def get_object(self, pk):
@@ -128,10 +128,12 @@ class InstanceDetail(APIView):
     def patch(self, request, pk):
         """ Update the instance
 
-        POST /rest/instance/pk
-        {
-            "name": "name"
-        }
+        Example::
+
+            POST /rest/instance/pk
+            {
+                "name": "name"
+            }
 
         Args:
             request:
@@ -191,8 +193,7 @@ class InstanceDetail(APIView):
 
 
 class InstanceRefreshToken(APIView):
-    """"
-        Refresh of token an instance.
+    """" Refresh of token an instance.
     """
 
     def get_object(self, pk):
@@ -213,12 +214,14 @@ class InstanceRefreshToken(APIView):
     def patch(self, request, pk):
         """ Refresh token of an instance.
 
-        PATCH /rest/instance/pk/refresh
-        {
-            "client_id": "my_client_id",
-            "client_secret": "my_client_secret",
-            "timeout": "1"
-        }
+        Example::
+
+            PATCH /rest/instance/pk/refresh
+            {
+                "client_id": "my_client_id",
+                "client_secret": "my_client_secret",
+                "timeout": "1"
+            }
 
         Args:
             request:

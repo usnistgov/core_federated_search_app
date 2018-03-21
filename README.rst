@@ -1,4 +1,5 @@
-core_federated_search_app
+=========================
+Core Federated Search App
 =========================
 
 Federated search backend for the curator core project.
