@@ -1,7 +1,9 @@
 """ Django forms of ADMIN core explore federated search
 """
 from django import forms
+from mongodbforms import DocumentForm
 
+from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.validators import BlankSpacesValidator
 
 # list of possible protocols available in the form
@@ -39,3 +41,11 @@ class RefreshRepositoryForm(forms.Form):
     timeout = forms.IntegerField(label="Timeout (s)", min_value=1, max_value=60, initial=1,
                                  widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
+
+class EditRepositoryForm(DocumentForm):
+    name = forms.CharField(label='Name', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Type the new name'}))
+
+    class Meta:
+        document = Instance
+        fields = ['name']

@@ -3,10 +3,12 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
-from core_main_app.utils.rendering import admin_render
-from core_federated_search_app.views.admin.forms import RepositoryForm
-import core_main_app.commons.exceptions as common_exception
+
 import core_federated_search_app.components.instance.api as api_instance
+import core_main_app.commons.exceptions as common_exception
+from core_federated_search_app.views.admin.forms import RepositoryForm
+from core_main_app.utils.rendering import admin_render
+from core_main_app.views.common.ajax import EditTemplateVersionManagerView
 
 
 @staff_member_required
@@ -24,9 +26,9 @@ def manage_repositories(request):
     }
 
     modals = [
-        "core_federated_search_app/admin/repositories/list/modals/edit.html",
         "core_federated_search_app/admin/repositories/list/modals/delete.html",
-        "core_federated_search_app/admin/repositories/list/modals/refresh.html"
+        "core_federated_search_app/admin/repositories/list/modals/refresh.html",
+        EditTemplateVersionManagerView.get_modal_html_path()
     ]
 
     assets = {
@@ -36,13 +38,10 @@ def manage_repositories(request):
                 "is_raw": False
             },
             {
-                "path": 'core_federated_search_app/admin/js/repositories/list/modals/edit.js',
-                "is_raw": False
-            },
-            {
                 "path": 'core_federated_search_app/admin/js/repositories/list/modals/refresh.js',
                 "is_raw": False
-            }
+            },
+            EditTemplateVersionManagerView.get_modal_js_path()
         ]
     }
 

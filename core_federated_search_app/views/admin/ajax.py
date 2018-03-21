@@ -2,13 +2,17 @@
 """
 import json
 
-from django.http.response import HttpResponse, HttpResponseBadRequest
+from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy
+from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.template import loader
 
 import core_federated_search_app.components.instance.api as instance_api
 import core_federated_search_app.views.admin.forms as admin_forms
 from core_federated_search_app.commons.exceptions import ExploreFederatedSearchAjaxError
-from core_main_app.views.common.forms import RenameForm
+from core_federated_search_app.components.instance.models import Instance
+from core_federated_search_app.views.admin.forms import EditRepositoryForm
+from core_main_app.views.common.ajax import EditObjectModalView
 
 
 def delete_repository(request):
@@ -25,64 +29,22 @@ def delete_repository(request):
     return HttpResponse(json.dumps({}), content_type='application/javascript')
 
 
-def edit_repository(request):
-    """ Edit the repository.
+class EditRepositoryView(EditObjectModalView):
+    form_class = EditRepositoryForm
+    model = Instance
+    success_url = reverse_lazy("admin:core_federated_search_app_repositories")
 
-    Args:
-        request:
+    def _save(self, form):
+        # Save treatment.
+        # It should return an HttpResponse.
+        try:
+            instance_api.upsert(self.object)
+            messages.add_message(self.request, messages.SUCCESS, 'Repository edited with success.')
+        except Exception, e:
+            form.add_error(None, e.message)
+            return super(EditRepositoryView, self).form_invalid(form)
 
-    Returns:
-
-    """
-    try:
-        if request.method == 'POST':
-            return _edit_repository_post(request)
-        else:
-            return _edit_repository_get(request)
-    except Exception as e:
-        return HttpResponseBadRequest(e.message)
-
-
-def _edit_repository_get(request):
-    """ Edit GET. Display the form
-
-    Args:
-        request:
-
-    Returns:
-
-    """
-    context_params = dict()
-    template = loader.get_template('core_federated_search_app/admin/repositories/list/modals/edit_form.html')
-    data = {'id': request.GET['id'], 'field': request.GET['name']}
-    rename_form = RenameForm(data)
-    context_params['rename_form'] = rename_form
-    context = {}
-    context.update(request)
-    context.update(context_params)
-    return HttpResponse(json.dumps({'template': template.render(context)}), content_type='application/javascript')
-
-
-def _edit_repository_post(request):
-    """ Edit POST. Post the form
-
-    Args:
-        request:
-
-    Returns:
-
-    """
-    try:
-        form = RenameForm(request.POST)
-        if form.is_valid():
-            instance = instance_api.get_by_id(request.POST['id'])
-            instance.name = request.POST['field']
-            instance_api.upsert(instance)
-        else:
-            raise ExploreFederatedSearchAjaxError("All fields are required.")
-    except Exception, e:
-        return HttpResponseBadRequest(e.message, content_type='application/javascript')
-    return HttpResponse(json.dumps({}), content_type='application/javascript')
+        return HttpResponseRedirect(self.get_success_url())
 
 
 def refresh_repository(request):

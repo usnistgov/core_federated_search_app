@@ -28,9 +28,8 @@
                 <td>{{ instance.expires }}</td>
                 <td id="{{ instance.id }}">
                     {% block box_actions %}
-                        <span class="icon legend edit">
-                            <a class="btn btn-default" href="#"><i class="fa fa-edit"></i> Rename </a>
-                        </span>
+                        {% url 'admin:core_federated_search_app_repositories_edit' instance.id as edit_url %}
+                        {% include 'core_main_app/common/buttons/edit.html' with label='Rename' %}
                         <span class="icon legend refresh">
                             <a class="btn btn-default" href="#"><i class="fa fa-refresh"></i> Refresh Token </a>
                         </span>
