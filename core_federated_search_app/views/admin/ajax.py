@@ -2,9 +2,8 @@
 """
 import json
 
-from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 
 import core_federated_search_app.components.instance.api as instance_api
@@ -33,18 +32,14 @@ class EditRepositoryView(EditObjectModalView):
     form_class = EditRepositoryForm
     model = Instance
     success_url = reverse_lazy("admin:core_federated_search_app_repositories")
+    success_message = 'Repository edited with success.'
 
     def _save(self, form):
         # Save treatment.
-        # It should return an HttpResponse.
         try:
             instance_api.upsert(self.object)
-            messages.add_message(self.request, messages.SUCCESS, 'Repository edited with success.')
         except Exception, e:
             form.add_error(None, e.message)
-            return super(EditRepositoryView, self).form_invalid(form)
-
-        return HttpResponseRedirect(self.get_success_url())
 
 
 def refresh_repository(request):
