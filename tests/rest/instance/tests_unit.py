@@ -6,7 +6,7 @@ from rest_framework import status
 
 import core_federated_search_app.rest.instance.views as instance_views
 from core_federated_search_app.components.instance.models import Instance
-from core_main_app.utils.tests_tools.MockUser import MockUser
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
 
 
@@ -18,7 +18,7 @@ class TestGetAllInstanceList(SimpleTestCase):
     @patch.object(Instance, 'get_all')
     def test_get_all_returns_status_200_with_no_permission_needed(self, mock_get_all):
         # Arrange
-        user = MockUser('0')
+        user = create_mock_user('0')
 
         # Act
         response = RequestMock.do_request_get(instance_views.InstanceList.as_view(), user, self.data)
@@ -33,13 +33,13 @@ class TestPatchInstanceRefreshToken(SimpleTestCase):
         self.data = None
 
     @patch.object(Instance, 'save_object')
-    def test_patch_returns_status_401_if_user_is_not_admin(self, mock_save):
+    def test_patch_returns_status_403_if_user_is_not_admin(self, mock_save):
         # Arrange
-        user = MockUser('0')
+        user = create_mock_user('0')
 
         # Act
         response = RequestMock.do_request_patch(instance_views.InstanceRefreshToken.as_view(), user, self.data)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 

@@ -5,7 +5,7 @@ from rest_framework import status
 
 import core_federated_search_app.rest.instance.views as instance_views
 from core_main_app.utils.integration_tests.integration_base_test_case import MongoIntegrationBaseTestCase
-from core_main_app.utils.tests_tools.MockUser import MockUser
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
 from tests.rest.instance.fixtures.fixtures import InstanceFixtures
 
@@ -20,7 +20,7 @@ class TestGetAllInstanceList(MongoIntegrationBaseTestCase):
 
     def test_get_all_returns_status_200_with_no_permission_needed(self):
         # Arrange
-        user = MockUser('1')
+        user = create_mock_user('1')
 
         # Act
         response = RequestMock.do_request_get(instance_views.InstanceList.as_view(),
@@ -39,7 +39,7 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_get_returns_object_when_found(self):
         # Arrange
-        user = MockUser('0')
+        user = create_mock_user('0')
         self.param = {
             'pk': self.fixture.data_1.id
         }
@@ -55,7 +55,7 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_get_raise_404_when_not_found(self):
         # Arrange
-        user = MockUser('0')
+        user = create_mock_user('0')
         self.param = {
             'pk': str(ObjectId())
         }
@@ -71,7 +71,7 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_get_raise_500_sever_error_when_general_error_occured(self):
         # Arrange
-        user = MockUser('0')
+        user = create_mock_user('0')
         self.param = {
             'pk': '0'
         }
@@ -93,9 +93,9 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
         super(TestDeleteInstanceDetail, self).setUp()
         self.data = None
 
-    def test_delete_raise_401_if_user_is_unauthorized(self):
+    def test_delete_raise_403_if_user_is_unauthorized(self):
         # Arrange
-        user = MockUser('0')
+        user = create_mock_user('0')
         self.param = {
             'pk': str(ObjectId())
         }
@@ -107,11 +107,11 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
                                                  self.param)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_delete_raise_404_when_not_found(self):
         # Arrange
-        user = MockUser('0', True, True)
+        user = create_mock_user('0', True, True)
         self.param = {
             'pk': str(ObjectId())
         }
@@ -127,7 +127,7 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_post_raise_500_sever_error_when_general_error_occured(self):
         # Arrange
-        user = MockUser('0', True, True)
+        user = create_mock_user('0', True, True)
         self.param = {
             'pk': '0'
         }
@@ -143,7 +143,7 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_post_return_204_if_document_is_deleted_whit_success(self):
         # Arrange
-        user = MockUser('0', True, True)
+        user = create_mock_user('0', True, True)
         self.param = {
             'pk': self.fixture.data_1.id
         }
@@ -165,9 +165,9 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
         super(TestPatchInstanceDetail, self).setUp()
         self.data = None
 
-    def test_patch_raise_401_if_user_is_authorized(self):
+    def test_patch_raise_403_if_user_is_authorized(self):
         # Arrange
-        user = MockUser('0')
+        user = create_mock_user('0')
         self.param = {
             'pk': str(ObjectId())
         }
@@ -179,11 +179,11 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
                                                 self.param)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_patch_raise_404_when_not_found(self):
         # Arrange
-        user = MockUser('0', True, True)
+        user = create_mock_user('0', True, True)
         self.param = {
             'pk': str(ObjectId())
         }
@@ -199,7 +199,7 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_patch_raise_500_sever_error_when_general_error_occured(self):
         # Arrange
-        user = MockUser('0', True, True)
+        user = create_mock_user('0', True, True)
         self.param = {
             'pk': '0'
         }
@@ -215,7 +215,7 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_patch_returns_200_when_data_are_valid_with_authorized_user(self):
         # Arrange
-        user = MockUser('0', True, True)
+        user = create_mock_user('0', True, True)
         self.param = {
             'pk': self.fixture.data_1.id
         }
