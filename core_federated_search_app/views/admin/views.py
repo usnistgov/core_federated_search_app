@@ -3,6 +3,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from requests.exceptions import SSLError
 
 import core_federated_search_app.components.instance.api as api_instance
 import core_main_app.commons.exceptions as common_exception
@@ -77,6 +78,8 @@ def add_repository(request):
                     return HttpResponseRedirect(reverse("admin:core_federated_search_app_repositories"))
             except common_exception.NotUniqueError:
                 context['error'] = 'An instance with the same parameters already exists.'
+            except SSLError:
+                context['error'] = 'Unable to reach the remote HTTPS instance.'
             except Exception as api_exception:
                 context['error'] = api_exception.message
     else:
