@@ -1,7 +1,7 @@
 Django==1.11.15
 django-oauth-toolkit==1.0.0
 # Installs: django-mongoengine==0.2.1
-https://github.com/MongoEngine/django-mongoengine/tarball/v0.2.1
+https://github.com/MongoEngine/django-mongoengine/tarball/v0.2.1#egg=django-mongoengine-0.2.1
 djangorestframework==3.7.3
 django-rest-framework-mongoengine==3.3.1
 django-simple-menu==1.2.1
