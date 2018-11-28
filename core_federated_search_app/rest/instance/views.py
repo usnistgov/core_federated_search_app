@@ -14,19 +14,22 @@ from core_main_app.utils.decorators import api_staff_member_required
 
 
 class InstanceList(APIView):
-    """ List all instances, or create a new instance.
+    """ List all Instances, or create a new Instance
     """
 
     def get(self, request):
-        """ Return http response with all instances.
-
-        GET /rest/instance
+        """ Return http response with all Instances
 
         Args:
-            request:
+
+            request: HTTP request
 
         Returns:
 
+            - code: 200
+              content: List of Instances
+            - code: 500
+              content: Internal server error
         """
         try:
             # Get object
@@ -43,11 +46,10 @@ class InstanceList(APIView):
 
     @method_decorator(api_staff_member_required())
     def post(self, request):
-        """ Save an instance.
+        """ Save an Instance
 
-        Example::
+        Parameters:
 
-            POST /rest/instance
             {
                 "name": "instance_name",
                 "endpoint": "url",
@@ -59,10 +61,17 @@ class InstanceList(APIView):
             }
 
         Args:
-            request:
+
+            request: HTTP request
 
         Returns:
 
+            - code: 201
+              content: Created Instance
+            - code: 400
+              content: Validation error
+            - code: 500
+              content: Internal server error
         """
         try:
             # Build serializer
@@ -81,17 +90,19 @@ class InstanceList(APIView):
 
 
 class InstanceDetail(APIView):
-    """" Retrieve, edit or delete an instance.
+    """" Retrieve, edit or delete an Instance
     """
 
     def get_object(self, pk):
-        """ Retrieve an instance
+        """ Retrieve an Instance
 
         Args:
-            pk:
+
+            pk: ObjectId
 
         Returns:
 
+            Instance
         """
         try:
             return instance_api.get_by_id(pk)
@@ -99,16 +110,21 @@ class InstanceDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        """ Get instance by its id.
-
-        GET /rest/instance/pk
+        """ Get Instance
 
         Args:
-            request:
-            pk:
+
+            request: HTTP request
+            pk: ObjectId
 
         Returns:
 
+            - code: 200
+              content: Instance
+            - code: 404
+              content: Object was not found
+            - code: 500
+              content: Internal server error
         """
         try:
             # Get object
@@ -126,21 +142,29 @@ class InstanceDetail(APIView):
 
     @method_decorator(api_staff_member_required())
     def patch(self, request, pk):
-        """ Update the instance
+        """ Update the Instance
 
-        Example::
+        Parameters:
 
-            POST /rest/instance/pk
             {
                 "name": "name"
             }
 
         Args:
-            request:
-            pk:
+
+            request: HTTP request
+            pk: ObjectId
 
         Returns:
 
+            - code: 200
+              content: Updated Instance
+            - code: 400
+              content: Validation error
+            - code: 404
+              content: Object was not found
+            - code: 500
+              content: Internal server error
         """
         try:
             # Get object
@@ -167,15 +191,21 @@ class InstanceDetail(APIView):
 
     @method_decorator(api_staff_member_required())
     def delete(self, request, pk):
-        """ Delete instance by its id.
-
-        DELETE /rest/instance/pk
+        """ Delete Instance
 
         Args:
-            pk:
+
+            request: HTTP request
+            pk: ObjectId
 
         Returns:
 
+            - code: 204
+              content: Deletion succeed
+            - code: 404
+              content: Object was not found
+            - code: 500
+              content: Internal server error
         """
         try:
             # Get object
@@ -193,17 +223,19 @@ class InstanceDetail(APIView):
 
 
 class InstanceRefreshToken(APIView):
-    """" Refresh of token an instance.
+    """" Refresh of token an Instance
     """
 
     def get_object(self, pk):
-        """ Retrieve an instance
+        """ Retrieve an Instance
 
         Args:
-            pk:
+
+            pk: ObjectId
 
         Returns:
 
+            Instance
         """
         try:
             return instance_api.get_by_id(pk)
@@ -212,11 +244,10 @@ class InstanceRefreshToken(APIView):
 
     @method_decorator(api_staff_member_required())
     def patch(self, request, pk):
-        """ Refresh token of an instance.
+        """ Refresh token of an Instance
 
-        Example::
+        Parameters:
 
-            PATCH /rest/instance/pk/refresh
             {
                 "client_id": "my_client_id",
                 "client_secret": "my_client_secret",
@@ -224,11 +255,18 @@ class InstanceRefreshToken(APIView):
             }
 
         Args:
-            request:
-            pk:
+
+            request: HTTP request
+            pk: ObjectId
 
         Returns:
 
+            - code: 200
+              content: Updated Instance
+            - code: 404
+              content: Object was not found
+            - code: 500
+              content: Internal server error
         """
         try:
             # Get object
