@@ -4,6 +4,7 @@ from django.http import Http404
 from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,6 +17,7 @@ from core_main_app.utils.decorators import api_staff_member_required
 class InstanceList(APIView):
     """ List all Instances, or create a new Instance
     """
+    permission_classes = (IsAdminUser,)
 
     def get(self, request):
         """ Return http response with all Instances
@@ -44,7 +46,6 @@ class InstanceList(APIView):
             content = {'message': api_exception.message}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @method_decorator(api_staff_member_required())
     def post(self, request):
         """ Save an Instance
 
@@ -93,6 +94,8 @@ class InstanceDetail(APIView):
     """" Retrieve, edit or delete an Instance
     """
 
+    permission_classes = (IsAdminUser,)
+
     def get_object(self, pk):
         """ Retrieve an Instance
 
@@ -140,7 +143,6 @@ class InstanceDetail(APIView):
             content = {'message': api_exception.message}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @method_decorator(api_staff_member_required())
     def patch(self, request, pk):
         """ Update the Instance
 
@@ -189,7 +191,6 @@ class InstanceDetail(APIView):
             content = {'message': api_exception.message}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @method_decorator(api_staff_member_required())
     def delete(self, request, pk):
         """ Delete Instance
 
@@ -226,6 +227,8 @@ class InstanceRefreshToken(APIView):
     """" Refresh of token an Instance
     """
 
+    permission_classes = (IsAdminUser,)
+
     def get_object(self, pk):
         """ Retrieve an Instance
 
@@ -242,7 +245,6 @@ class InstanceRefreshToken(APIView):
         except exceptions.DoesNotExist:
             raise Http404
 
-    @method_decorator(api_staff_member_required())
     def patch(self, request, pk):
         """ Refresh token of an Instance
 

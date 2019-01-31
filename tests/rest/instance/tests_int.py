@@ -18,9 +18,20 @@ class TestGetAllInstanceList(MongoIntegrationBaseTestCase):
     def setUp(self):
         super(TestGetAllInstanceList, self).setUp()
 
-    def test_get_all_returns_status_200_with_no_permission_needed(self):
+    def test_get_all_returns_status_403_with_no_permission(self):
         # Arrange
-        user = create_mock_user('1')
+        user = create_mock_user('1', is_anonymous=True)
+
+        # Act
+        response = RequestMock.do_request_get(instance_views.InstanceList.as_view(),
+                                              user)
+
+        # Assert
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_get_all_returns_status_403_if_staff(self):
+        # Arrange
+        user = create_mock_user('1', is_staff=True)
 
         # Act
         response = RequestMock.do_request_get(instance_views.InstanceList.as_view(),
@@ -51,11 +62,11 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
                                               self.param)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_get_raise_404_when_not_found(self):
         # Arrange
-        user = create_mock_user('0')
+        user = create_mock_user('0', True)
         self.param = {
             'pk': str(ObjectId())
         }
@@ -71,7 +82,7 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
 
     def test_get_raise_500_sever_error_when_general_error_occured(self):
         # Arrange
-        user = create_mock_user('0')
+        user = create_mock_user('0', True)
         self.param = {
             'pk': '0'
         }

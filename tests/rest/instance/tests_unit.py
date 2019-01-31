@@ -16,9 +16,20 @@ class TestGetAllInstanceList(SimpleTestCase):
         self.data = None
 
     @patch.object(Instance, 'get_all')
-    def test_get_all_returns_status_200_with_no_permission_needed(self, mock_get_all):
+    def test_get_all_returns_status_403_with_no_permission(self, mock_get_all):
         # Arrange
         user = create_mock_user('0')
+
+        # Act
+        response = RequestMock.do_request_get(instance_views.InstanceList.as_view(), user, self.data)
+
+        # Assert
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    @patch.object(Instance, 'get_all')
+    def test_get_all_returns_status_200_if_staff(self, mock_get_all):
+        # Arrange
+        user = create_mock_user('0', is_staff=True)
 
         # Act
         response = RequestMock.do_request_get(instance_views.InstanceList.as_view(), user, self.data)
