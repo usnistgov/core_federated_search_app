@@ -62,6 +62,24 @@ class Instance(Document):
         except Exception as ex:
             raise exceptions.ModelError(ex.message)
 
+    @staticmethod
+    def get_by_endpoint_starting_with(instance_endpoint):
+        """ Return the object with the given endpoint.
+
+        Args:
+            instance_endpoint:
+
+        Returns:
+            Instance (obj): Instance object with the given name
+
+        """
+        try:
+            return Instance.objects.get(endpoint__startswith=str(instance_endpoint))
+        except mongoengine_errors.DoesNotExist as e:
+            raise exceptions.DoesNotExist(e.message)
+        except Exception as ex:
+            raise exceptions.ModelError(ex.message)
+
     def save_object(self):
         """ Custom save.
 

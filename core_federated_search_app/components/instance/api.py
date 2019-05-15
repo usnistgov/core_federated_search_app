@@ -41,6 +41,18 @@ def get_by_name(instance_name):
     return Instance.get_by_name(instance_name)
 
 
+def get_by_endpoint_starting_with(instance_endpoint):
+    """ Return instance object with the given get_by_endpoint.
+
+    Args:
+        instance_endpoint:
+
+    Returns: instance object
+
+    """
+    return Instance.get_by_endpoint_starting_with(instance_endpoint)
+
+
 def delete(instance):
     """ Delete an instance.
 
