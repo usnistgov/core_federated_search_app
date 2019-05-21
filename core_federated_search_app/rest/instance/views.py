@@ -285,6 +285,6 @@ class InstanceRefreshToken(APIView):
         except Http404:
             content = {'message': 'Instance not found.'}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
-        except Exception, api_exception:
+        except Exception as api_exception:
             content = {'message': api_exception.message}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
