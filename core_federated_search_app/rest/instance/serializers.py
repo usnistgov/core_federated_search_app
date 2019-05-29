@@ -1,5 +1,6 @@
 """ Instance Serializers
 """
+from builtins import object
 from rest_framework.fields import CharField, IntegerField
 from rest_framework_mongoengine.serializers import DocumentSerializer
 
@@ -10,7 +11,7 @@ from core_federated_search_app.components.instance.models import Instance
 class InstanceSerializerModel(DocumentSerializer):
     """ Instance serializer
     """
-    class Meta:
+    class Meta(object):
         """ Meta
         """
         model = Instance
@@ -35,7 +36,7 @@ class InstanceSerializerCreate(DocumentSerializer):
     username = CharField()
     password = CharField()
 
-    class Meta:
+    class Meta(object):
         """ Meta
         """
         model = Instance

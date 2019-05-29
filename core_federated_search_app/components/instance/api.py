@@ -1,11 +1,17 @@
 """ Instance api
 """
+import json
+from builtins import str
 from datetime import datetime, timedelta
+from urllib.parse import urlparse
+
+from future import standard_library
+
 from core_explore_common_app.utils.protocols.oauth2 import post_request_token, post_refresh_token
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.exceptions import ApiError
-from urlparse import urlparse
-import json
+
+standard_library.install_aliases()
 
 
 def get_all():

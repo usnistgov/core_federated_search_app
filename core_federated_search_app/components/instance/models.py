@@ -1,5 +1,6 @@
 """ Instance model
 """
+from builtins import str
 from django_mongoengine import fields, Document
 from mongoengine import errors as mongoengine_errors
 
@@ -40,9 +41,9 @@ class Instance(Document):
         try:
             return Instance.objects.get(pk=str(instance_id))
         except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(e.message)
+            raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
-            raise exceptions.ModelError(ex.message)
+            raise exceptions.ModelError(str(ex))
 
     @staticmethod
     def get_by_name(instance_name):
@@ -58,9 +59,9 @@ class Instance(Document):
         try:
             return Instance.objects.get(name=str(instance_name))
         except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(e.message)
+            raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
-            raise exceptions.ModelError(ex.message)
+            raise exceptions.ModelError(str(ex))
 
     @staticmethod
     def get_by_endpoint_starting_with(instance_endpoint):

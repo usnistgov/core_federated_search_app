@@ -1,5 +1,6 @@
 """ Django forms of ADMIN core explore federated search
 """
+from builtins import object
 from django import forms
 from mongodbforms import DocumentForm
 
@@ -46,6 +47,6 @@ class EditRepositoryForm(DocumentForm):
     name = forms.CharField(label='Name', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Type the new name'}))
 
-    class Meta:
+    class Meta(object):
         document = Instance
         fields = ['name']

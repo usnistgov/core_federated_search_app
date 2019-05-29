@@ -1,5 +1,6 @@
 """Integration tests for instance rest api
 """
+from builtins import str
 from bson import ObjectId
 from rest_framework import status
 
