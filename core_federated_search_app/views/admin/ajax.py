@@ -24,7 +24,7 @@ def delete_repository(request):
         instance = instance_api.get_by_id(request.GET['id'])
         instance_api.delete(instance)
     except Exception as e:
-        return HttpResponseBadRequest(e.message, content_type='application/javascript')
+        return HttpResponseBadRequest(str(e), content_type='application/javascript')
     return HttpResponse(json.dumps({}), content_type='application/javascript')
 
 
@@ -39,7 +39,7 @@ class EditRepositoryView(EditObjectModalView):
         try:
             instance_api.upsert(self.object)
         except Exception as e:
-            form.add_error(None, e.message)
+            form.add_error(None, str(e))
 
 
 def refresh_repository(request):
@@ -57,7 +57,7 @@ def refresh_repository(request):
         else:
             return _refresh_repository_get(request)
     except Exception as e:
-        return HttpResponseBadRequest(e.message)
+        return HttpResponseBadRequest(str(e))
 
 
 def _refresh_repository_post(request):
@@ -81,7 +81,7 @@ def _refresh_repository_post(request):
                                                 request.POST["timeout"])
             return HttpResponse(json.dumps({}), content_type='application/javascript')
         except Exception as e:
-            raise ExploreFederatedSearchAjaxError(e.message)
+            raise ExploreFederatedSearchAjaxError(str(e))
     else:
         raise ExploreFederatedSearchAjaxError("All fields are required.")
 

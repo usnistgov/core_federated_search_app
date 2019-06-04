@@ -43,7 +43,7 @@ class InstanceList(APIView):
             # Return response
             return Response(return_value.data)
         except Exception as api_exception:
-            content = {'message': api_exception.message}
+            content = {'message': str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request):
@@ -86,7 +86,7 @@ class InstanceList(APIView):
             content = {'message': validation_exception.detail}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except Exception as api_exception:
-            content = {'message': api_exception.message}
+            content = {'message': str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -219,7 +219,7 @@ class InstanceDetail(APIView):
             content = {'message': 'Instance not found.'}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
-            content = {'message': api_exception.message}
+            content = {'message': str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -286,5 +286,5 @@ class InstanceRefreshToken(APIView):
             content = {'message': 'Instance not found.'}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
-            content = {'message': api_exception.message}
+            content = {'message': str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

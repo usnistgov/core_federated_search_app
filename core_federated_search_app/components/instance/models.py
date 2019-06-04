@@ -77,9 +77,9 @@ class Instance(Document):
         try:
             return Instance.objects.get(endpoint__startswith=str(instance_endpoint))
         except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(e.message)
+            raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
-            raise exceptions.ModelError(ex.message)
+            raise exceptions.ModelError(str(ex))
 
     def save_object(self):
         """ Custom save.
@@ -93,7 +93,7 @@ class Instance(Document):
         except mongoengine_errors.NotUniqueError as e:
             raise exceptions.NotUniqueError("Unable to create the new repository: Not Unique")
         except Exception as ex:
-            raise exceptions.ModelError(ex.message)
+            raise exceptions.ModelError(str(ex))
 
     def check_instance_name(self):
         """ Test if the name is 'Local'.

@@ -81,7 +81,7 @@ def add_repository(request):
             except SSLError:
                 context['error'] = 'Unable to reach the remote HTTPS instance.'
             except Exception as api_exception:
-                context['error'] = api_exception.message
+                context['error'] = str(api_exception)
     else:
         new_form = True
 
