@@ -1,6 +1,5 @@
 """ Django forms of ADMIN core explore federated search
 """
-from builtins import object
 from django import forms
 from mongodbforms import DocumentForm
 

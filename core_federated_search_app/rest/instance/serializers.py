@@ -1,6 +1,5 @@
 """ Instance Serializers
 """
-from builtins import object
 from rest_framework.fields import CharField, IntegerField
 from rest_framework_mongoengine.serializers import DocumentSerializer
 
