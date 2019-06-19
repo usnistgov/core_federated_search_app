@@ -1,7 +1,6 @@
 """ REST Views for Instance object
 """
 from django.http import Http404
-from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAdminUser
@@ -11,7 +10,6 @@ from rest_framework.views import APIView
 import core_federated_search_app.components.instance.api as instance_api
 from core_federated_search_app.rest.instance.serializers import InstanceSerializerCreate, InstanceSerializerModel
 from core_main_app.commons import exceptions
-from core_main_app.utils.decorators import api_staff_member_required
 
 
 class InstanceList(APIView):

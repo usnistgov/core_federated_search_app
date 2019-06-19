@@ -4,11 +4,9 @@ import json
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
-
 from core_explore_common_app.utils.protocols.oauth2 import post_request_token, post_refresh_token
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.exceptions import ApiError
-
 
 
 def get_all():
