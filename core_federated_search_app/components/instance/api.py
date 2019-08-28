@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 from core_explore_common_app.utils.protocols.oauth2 import post_request_token, post_refresh_token
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.exceptions import ApiError
+from core_main_app.utils.requests_utils import requests_utils
 
 
 def get_all():
@@ -142,6 +143,24 @@ def refresh_instance_token(instance, client_id, client_secret, timeout):
         return upsert(instance)
     else:
         raise ApiError("Unable to get access to the remote instance using these parameters.")
+
+
+def get_blob_response_from_url(url_base, url):
+    """ Get the blob response from an url
+
+    Args:
+        url_base: {uri.scheme}://{uri.netloc}
+        url: full URL
+
+    Returns:
+
+    """
+    # get instance from endpoint
+    instance = get_by_endpoint_starting_with(url_base)
+    if instance.endpoint in url:
+        # here we are sure that our given url is one of our known instances
+        return requests_utils.send_get_request_with_access_token(url=url,
+                                                                 access_token=instance.access_token)
 
 
 def _create_instance_object_from_request_response(name, endpoint, content):
