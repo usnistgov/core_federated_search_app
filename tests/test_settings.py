@@ -7,9 +7,6 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sites",
 
-    # Extra apps
-    "password_policies",
-
     # Local app
     "tests",
 ]
