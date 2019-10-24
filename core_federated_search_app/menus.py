@@ -1,6 +1,6 @@
 """ Federated search menu
 """
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from menu import Menu, MenuItem
 
 

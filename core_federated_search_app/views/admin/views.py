@@ -1,7 +1,7 @@
 """ Admin views Core explore Federated Search App
 """
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from requests.exceptions import SSLError
 
