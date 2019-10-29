@@ -1,5 +1,6 @@
 """ Instance model
 """
+from django.conf import settings
 from django_mongoengine import fields, Document
 from mongoengine import errors as mongoengine_errors
 
@@ -95,12 +96,12 @@ class Instance(Document):
             raise exceptions.ModelError(str(ex))
 
     def check_instance_name(self):
-        """ Test if the name is 'Local'.
+        """ Test if the name is the name of the local instance.
 
         Returns:
 
         """
-        if self.name.upper() == "LOCAL":
+        if self.name.upper() == settings.CUSTOM_NAME:
             raise exceptions.ModelError("By default, the instance named Local is the instance currently running.")
 
     def clean(self):
