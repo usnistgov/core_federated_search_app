@@ -2,7 +2,7 @@
 """
 import json
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 
