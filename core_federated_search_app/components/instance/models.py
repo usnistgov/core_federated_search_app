@@ -101,8 +101,8 @@ class Instance(Document):
         Returns:
 
         """
-        if self.name.upper() == settings.CUSTOM_NAME:
-            raise exceptions.ModelError("By default, the instance named Local is the instance currently running.")
+        if self.name.upper() == settings.CUSTOM_NAME.upper():
+            raise exceptions.ModelError(f'By default, the instance named "{settings.CUSTOM_NAME}" is the instance currently running.')
 
     def clean(self):
         """ Clean is called before saving
