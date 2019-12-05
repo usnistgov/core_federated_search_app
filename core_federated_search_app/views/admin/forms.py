@@ -1,10 +1,10 @@
 """ Django forms of ADMIN core explore federated search
 """
 from django import forms
-from mongodbforms import DocumentForm
 
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.validators import BlankSpacesValidator
+from django_mongoengine.forms import DocumentForm
 
 # list of possible protocols available in the form
 PROTOCOLS = (('http', 'HTTP'),

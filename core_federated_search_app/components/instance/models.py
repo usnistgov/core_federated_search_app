@@ -5,13 +5,14 @@ from django_mongoengine import fields, Document
 from mongoengine import errors as mongoengine_errors
 
 from core_main_app.commons import exceptions
-from core_main_app.commons.regex import NOT_EMPTY_OR_WHITESPACES
+from core_main_app.utils.validation.regex_validation import not_empty_or_whitespaces
+from django_mongoengine import fields, Document
 
 
 class Instance(Document):
     """ Represents an instance of a remote project
     """
-    name = fields.StringField(blank=False, unique=True, regex=NOT_EMPTY_OR_WHITESPACES)
+    name = fields.StringField(blank=False, unique=True, validation=not_empty_or_whitespaces)
     endpoint = fields.URLField(blank=False, unique=True)
     access_token = fields.StringField(blank=False)
     refresh_token = fields.StringField(blank=False)
