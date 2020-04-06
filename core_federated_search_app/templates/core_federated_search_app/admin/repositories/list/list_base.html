@@ -4,7 +4,7 @@
 
 {% block box_tools %}
 <div class="btn-group pull-right">
-<a href="{% url 'admin:core_federated_search_app_repositories_add'%}" class="btn btn-default add-repository-btn">
+<a href="{% url 'admin:core_federated_search_app_repositories_add'%}" class="btn btn-secondary add-repository-btn">
     <i class="fa fa-plus-circle"></i> Add Repository
 </a>
 </div>
@@ -31,10 +31,10 @@
                         {% url 'admin:core_federated_search_app_repositories_edit' instance.id as edit_url %}
                         {% include 'core_main_app/common/buttons/edit.html' with label='Rename' %}
                         <span class="icon legend refresh">
-                            <a class="btn btn-default" href="#"><i class="fa fa-refresh"></i> Refresh Token </a>
+                            <a class="btn btn-secondary" href="#"><i class="fa fa-refresh"></i> Refresh Token </a>
                         </span>
                         <span class="icon legend delete">
-                            <a class="btn btn-danger" href="#"><i class="fa fa-trash"></i> Delete </a>
+                            <button class="btn btn-danger"><i class="fa fa-trash"></i> Delete </button>
                         </span>
                     {% endblock %}
                 </td>
