@@ -23,7 +23,9 @@
       {% csrf_token %}
       {{ data.repository_form }}
       <br/>
-      <input type="submit" class="btn btn-secondary pull-right" value="Add Repository"/>
+      <button type="submit" class="btn btn-secondary float-right mt-3">
+          <i class="fa fa-plus"></i> Add Repository
+      </button>
     </form>
 {% endblock %}
 
