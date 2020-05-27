@@ -12,7 +12,10 @@ from django_mongoengine import fields, Document
 class Instance(Document):
     """ Represents an instance of a remote project
     """
-    name = fields.StringField(blank=False, unique=True, validation=not_empty_or_whitespaces)
+
+    name = fields.StringField(
+        blank=False, unique=True, validation=not_empty_or_whitespaces
+    )
     endpoint = fields.URLField(blank=False, unique=True)
     access_token = fields.StringField(blank=False)
     refresh_token = fields.StringField(blank=False)
@@ -92,7 +95,9 @@ class Instance(Document):
             self.check_instance_name()
             return self.save()
         except mongoengine_errors.NotUniqueError as e:
-            raise exceptions.NotUniqueError("Unable to create the new repository: Not Unique")
+            raise exceptions.NotUniqueError(
+                "Unable to create the new repository: Not Unique"
+            )
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -103,7 +108,9 @@ class Instance(Document):
 
         """
         if self.name.upper() == settings.CUSTOM_NAME.upper():
-            raise exceptions.ModelError(f'By default, the instance named "{settings.CUSTOM_NAME}" is the instance currently running.')
+            raise exceptions.ModelError(
+                f'By default, the instance named "{settings.CUSTOM_NAME}" is the instance currently running.'
+            )
 
     def clean(self):
         """ Clean is called before saving

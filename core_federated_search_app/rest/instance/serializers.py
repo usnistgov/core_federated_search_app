@@ -10,25 +10,28 @@ from core_federated_search_app.components.instance.models import Instance
 class InstanceSerializerModel(DocumentSerializer):
     """ Instance serializer
     """
+
     class Meta(object):
         """ Meta
         """
+
         model = Instance
         fields = "__all__"
-        read_only_fields = ('endpoint', 'access_token', 'refresh_token', 'expires')
+        read_only_fields = ("endpoint", "access_token", "refresh_token", "expires")
 
     def create(self, validated_data):
         raise Exception("Wrong serializer for creation")
 
     def update(self, instance, validated_data):
         # The only field we can actually update is the name of the instance
-        instance.name = validated_data.get('name', instance.name)
+        instance.name = validated_data.get("name", instance.name)
         return instance_api.upsert(instance)
 
 
 class InstanceSerializerCreate(DocumentSerializer):
     """ Instance serializer for post method
     """
+
     client_id = CharField()
     client_secret = CharField()
     timeout = IntegerField()
@@ -38,6 +41,7 @@ class InstanceSerializerCreate(DocumentSerializer):
     class Meta(object):
         """ Meta
         """
+
         model = Instance
         fields = [
             "name",
@@ -46,7 +50,7 @@ class InstanceSerializerCreate(DocumentSerializer):
             "client_secret",
             "timeout",
             "username",
-            "password"
+            "password",
         ]
 
     def create(self, validated_data):

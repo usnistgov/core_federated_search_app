@@ -9,6 +9,7 @@ from core_main_app.utils.integration_tests.fixture_interface import FixtureInter
 class InstanceFixtures(FixtureInterface):
     """ Instance fixtures
     """
+
     data_1 = None
     data_collection = None
 
@@ -27,9 +28,11 @@ class InstanceFixtures(FixtureInterface):
         Returns:
 
         """
-        self.data_1 = Instance(name="name_1",
-                               endpoint='http://127.0.0.1:8000/',
-                               access_token='token',
-                               refresh_token='refresh',
-                               expires=datetime.datetime.now()).save()
+        self.data_1 = Instance(
+            name="name_1",
+            endpoint="http://127.0.0.1:8000/",
+            access_token="token",
+            refresh_token="refresh",
+            expires=datetime.datetime.now(),
+        ).save()
         self.data_collection = [self.data_1]

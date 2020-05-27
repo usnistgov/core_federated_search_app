@@ -21,18 +21,18 @@ def delete_repository(request):
 
     """
     try:
-        instance = instance_api.get_by_id(request.GET['id'])
+        instance = instance_api.get_by_id(request.GET["id"])
         instance_api.delete(instance)
     except Exception as e:
-        return HttpResponseBadRequest(str(e), content_type='application/javascript')
-    return HttpResponse(json.dumps({}), content_type='application/javascript')
+        return HttpResponseBadRequest(str(e), content_type="application/javascript")
+    return HttpResponse(json.dumps({}), content_type="application/javascript")
 
 
 class EditRepositoryView(EditObjectModalView):
     form_class = EditRepositoryForm
     document = Instance
     success_url = reverse_lazy("admin:core_federated_search_app_repositories")
-    success_message = 'Repository edited with success.'
+    success_message = "Repository edited with success."
 
     def _save(self, form):
         # Save treatment.
@@ -52,7 +52,7 @@ def refresh_repository(request):
 
     """
     try:
-        if request.method == 'POST':
+        if request.method == "POST":
             return _refresh_repository_post(request)
         else:
             return _refresh_repository_get(request)
@@ -72,14 +72,20 @@ def _refresh_repository_post(request):
     form = admin_forms.RefreshRepositoryForm(request.POST)
     if form.is_valid():
         try:
-            repository_id = request.POST['id']
+            repository_id = request.POST["id"]
             instance = instance_api.get_by_id(repository_id)
         except:
-            raise ExploreFederatedSearchAjaxError("Error: Unable to access the registered instance.")
+            raise ExploreFederatedSearchAjaxError(
+                "Error: Unable to access the registered instance."
+            )
         try:
-            instance_api.refresh_instance_token(instance, request.POST["client_id"], request.POST["client_secret"],
-                                                request.POST["timeout"])
-            return HttpResponse(json.dumps({}), content_type='application/javascript')
+            instance_api.refresh_instance_token(
+                instance,
+                request.POST["client_id"],
+                request.POST["client_secret"],
+                request.POST["timeout"],
+            )
+            return HttpResponse(json.dumps({}), content_type="application/javascript")
         except Exception as e:
             raise ExploreFederatedSearchAjaxError(str(e))
     else:
@@ -96,10 +102,15 @@ def _refresh_repository_get(request):
 
     """
     context_params = dict()
-    template = loader.get_template('core_federated_search_app/admin/repositories/list/refresh_form.html')
+    template = loader.get_template(
+        "core_federated_search_app/admin/repositories/list/refresh_form.html"
+    )
     refresh_form = admin_forms.RefreshRepositoryForm()
-    context_params['refresh_form'] = refresh_form
+    context_params["refresh_form"] = refresh_form
     context = {}
     context.update(request)
     context.update(context_params)
-    return HttpResponse(json.dumps({'template': template.render(context)}), content_type='application/javascript')
+    return HttpResponse(
+        json.dumps({"template": template.render(context)}),
+        content_type="application/javascript",
+    )

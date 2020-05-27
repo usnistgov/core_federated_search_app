@@ -8,13 +8,17 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 import core_federated_search_app.components.instance.api as instance_api
-from core_federated_search_app.rest.instance.serializers import InstanceSerializerCreate, InstanceSerializerModel
+from core_federated_search_app.rest.instance.serializers import (
+    InstanceSerializerCreate,
+    InstanceSerializerModel,
+)
 from core_main_app.commons import exceptions
 
 
 class InstanceList(APIView):
     """ List all Instances, or create a new Instance
     """
+
     permission_classes = (IsAdminUser,)
 
     def get(self, request):
@@ -41,7 +45,7 @@ class InstanceList(APIView):
             # Return response
             return Response(return_value.data)
         except Exception as api_exception:
-            content = {'message': str(api_exception)}
+            content = {"message": str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request):
@@ -81,10 +85,10 @@ class InstanceList(APIView):
             instance_serializer.save()
             return Response(instance_serializer.data, status=status.HTTP_201_CREATED)
         except ValidationError as validation_exception:
-            content = {'message': validation_exception.detail}
+            content = {"message": validation_exception.detail}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except Exception as api_exception:
-            content = {'message': str(api_exception)}
+            content = {"message": str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -135,10 +139,10 @@ class InstanceDetail(APIView):
             # Return response
             return Response(return_value.data)
         except Http404:
-            content = {'message': 'Instance not found.'}
+            content = {"message": "Instance not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
-            content = {'message': str(api_exception)}
+            content = {"message": str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request, pk):
@@ -170,9 +174,9 @@ class InstanceDetail(APIView):
             # Get object
             instance_object = self.get_object(pk)
             # Build serializer
-            instance_serializer = InstanceSerializerModel(instance=instance_object,
-                                                          data=request.data,
-                                                          partial=True)
+            instance_serializer = InstanceSerializerModel(
+                instance=instance_object, data=request.data, partial=True
+            )
             # Validation
             instance_serializer.is_valid(True)
             # Save data
@@ -180,13 +184,13 @@ class InstanceDetail(APIView):
             # Return response
             return Response(instance_serializer.data, status=status.HTTP_200_OK)
         except Http404:
-            content = {'message': 'Instance not found.'}
+            content = {"message": "Instance not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except ValidationError as validation_exception:
-            content = {'message': validation_exception.detail}
+            content = {"message": validation_exception.detail}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except Exception as api_exception:
-            content = {'message': str(api_exception)}
+            content = {"message": str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, pk):
@@ -214,10 +218,10 @@ class InstanceDetail(APIView):
             # Return response
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
-            content = {'message': 'Instance not found.'}
+            content = {"message": "Instance not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
-            content = {'message': str(api_exception)}
+            content = {"message": str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -273,16 +277,19 @@ class InstanceRefreshToken(APIView):
             instance_object = self.get_object(pk)
 
             # refresh the token
-            instance_object = instance_api.refresh_instance_token(instance_object, request.data["client_id"],
-                                                                  request.data["client_secret"],
-                                                                  request.data["timeout"])
+            instance_object = instance_api.refresh_instance_token(
+                instance_object,
+                request.data["client_id"],
+                request.data["client_secret"],
+                request.data["timeout"],
+            )
             # Serialize object
             return_value = InstanceSerializerModel(instance_object)
             # Return response
             return Response(return_value.data, status=status.HTTP_200_OK)
         except Http404:
-            content = {'message': 'Instance not found.'}
+            content = {"message": "Instance not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
-            content = {'message': str(api_exception)}
+            content = {"message": str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
