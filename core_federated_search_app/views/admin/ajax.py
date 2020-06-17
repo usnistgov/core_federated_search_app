@@ -2,6 +2,7 @@
 """
 import json
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 from django.urls import reverse_lazy
@@ -15,6 +16,7 @@ from core_federated_search_app.views.admin.forms import EditRepositoryForm
 from core_main_app.views.common.ajax import EditObjectModalView
 
 
+@staff_member_required
 def delete_repository(request):
     """ Delete repository.
 
@@ -45,6 +47,7 @@ class EditRepositoryView(EditObjectModalView):
             form.add_error(None, str(e))
 
 
+@staff_member_required
 def refresh_repository(request):
     """ Refresh repository.
 

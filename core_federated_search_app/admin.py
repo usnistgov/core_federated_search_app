@@ -1,6 +1,7 @@
 """ Url router for the administration site
 """
 from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import re_path
 
 from core_federated_search_app.views.admin import (
@@ -21,7 +22,7 @@ admin_urls = [
     ),
     re_path(
         r"^repositories/(?P<pk>[\w-]+)/edit/$",
-        admin_ajax.EditRepositoryView.as_view(),
+        staff_member_required(admin_ajax.EditRepositoryView.as_view()),
         name="core_federated_search_app_repositories_edit",
     ),
     re_path(
