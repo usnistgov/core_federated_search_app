@@ -2,9 +2,10 @@
 """
 import json
 
-from django.urls import reverse_lazy
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.template import loader
+from django.urls import reverse_lazy
+from django.utils.html import escape
 
 import core_federated_search_app.components.instance.api as instance_api
 import core_federated_search_app.views.admin.forms as admin_forms
@@ -24,7 +25,9 @@ def delete_repository(request):
         instance = instance_api.get_by_id(request.GET["id"])
         instance_api.delete(instance)
     except Exception as e:
-        return HttpResponseBadRequest(str(e), content_type="application/javascript")
+        return HttpResponseBadRequest(
+            escape(str(e)), content_type="application/javascript"
+        )
     return HttpResponse(json.dumps({}), content_type="application/javascript")
 
 
@@ -57,7 +60,7 @@ def refresh_repository(request):
         else:
             return _refresh_repository_get(request)
     except Exception as e:
-        return HttpResponseBadRequest(str(e))
+        return HttpResponseBadRequest(escape(str(e)))
 
 
 def _refresh_repository_post(request):
