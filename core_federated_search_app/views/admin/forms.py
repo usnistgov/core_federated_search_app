@@ -11,8 +11,7 @@ PROTOCOLS = (("http", "HTTP"), ("https", "HTTPS"))
 
 
 class RepositoryForm(forms.Form):
-    """ Form to register a new repository.
-    """
+    """Form to register a new repository."""
 
     name = forms.CharField(
         label="Instance Name",
@@ -59,8 +58,7 @@ class RepositoryForm(forms.Form):
 
 
 class RefreshRepositoryForm(forms.Form):
-    """ Form to refresh the token of a repository.
-    """
+    """Form to refresh the token of a repository."""
 
     client_id = forms.CharField(
         label="Client ID",

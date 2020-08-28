@@ -14,7 +14,7 @@ from core_main_app.views.common.ajax import EditTemplateVersionManagerView
 
 @staff_member_required
 def manage_repositories(request):
-    """ Manage repositories, Display as list.
+    """Manage repositories, Display as list.
 
     Args:
         request:
@@ -55,7 +55,7 @@ def manage_repositories(request):
 
 @staff_member_required
 def add_repository(request):
-    """ Add new repository.
+    """Add new repository.
 
     Args:
         request:

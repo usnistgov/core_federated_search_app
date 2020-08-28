@@ -8,12 +8,10 @@ from core_federated_search_app.components.instance.models import Instance
 
 
 class InstanceSerializerModel(DocumentSerializer):
-    """ Instance serializer
-    """
+    """Instance serializer"""
 
     class Meta(object):
-        """ Meta
-        """
+        """Meta"""
 
         model = Instance
         fields = "__all__"
@@ -29,8 +27,7 @@ class InstanceSerializerModel(DocumentSerializer):
 
 
 class InstanceSerializerCreate(DocumentSerializer):
-    """ Instance serializer for post method
-    """
+    """Instance serializer for post method"""
 
     client_id = CharField()
     client_secret = CharField()
@@ -39,8 +36,7 @@ class InstanceSerializerCreate(DocumentSerializer):
     password = CharField()
 
     class Meta(object):
-        """ Meta
-        """
+        """Meta"""
 
         model = Instance
         fields = [

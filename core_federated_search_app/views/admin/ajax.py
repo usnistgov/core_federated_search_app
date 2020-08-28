@@ -18,7 +18,7 @@ from core_main_app.views.common.ajax import EditObjectModalView
 
 @staff_member_required
 def delete_repository(request):
-    """ Delete repository.
+    """Delete repository.
 
     Returns:
 
@@ -49,7 +49,7 @@ class EditRepositoryView(EditObjectModalView):
 
 @staff_member_required
 def refresh_repository(request):
-    """ Refresh repository.
+    """Refresh repository.
 
     Args:
         request:
@@ -67,7 +67,7 @@ def refresh_repository(request):
 
 
 def _refresh_repository_post(request):
-    """ POST request refresh repository.
+    """POST request refresh repository.
 
     Args:
         request:
@@ -99,7 +99,7 @@ def _refresh_repository_post(request):
 
 
 def _refresh_repository_get(request):
-    """ GET request refresh repository.
+    """GET request refresh repository.
 
     Args:
         request:

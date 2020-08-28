@@ -42,7 +42,8 @@ class TestInstanceListGetPermission(SimpleTestCase):
         instance_serializer_data.return_value = True
 
         response = RequestMock.do_request_get(
-            instance_views.InstanceList.as_view(), create_mock_user("1", is_staff=True),
+            instance_views.InstanceList.as_view(),
+            create_mock_user("1", is_staff=True),
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -79,7 +80,8 @@ class TestInstanceListPostPermission(SimpleTestCase):
         instance_serializer_data.return_value = True
 
         response = RequestMock.do_request_post(
-            instance_views.InstanceList.as_view(), create_mock_user("1", is_staff=True),
+            instance_views.InstanceList.as_view(),
+            create_mock_user("1", is_staff=True),
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

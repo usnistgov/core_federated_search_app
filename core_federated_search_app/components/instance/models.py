@@ -10,8 +10,7 @@ from django_mongoengine import fields, Document
 
 
 class Instance(Document):
-    """ Represents an instance of a remote project
-    """
+    """Represents an instance of a remote project"""
 
     name = fields.StringField(
         blank=False, unique=True, validation=not_empty_or_whitespaces
@@ -23,7 +22,7 @@ class Instance(Document):
 
     @staticmethod
     def get_all():
-        """ Return all instances.
+        """Return all instances.
 
         Returns:
             instance collection
@@ -33,7 +32,7 @@ class Instance(Document):
 
     @staticmethod
     def get_by_id(instance_id):
-        """ Return the object with the given id.
+        """Return the object with the given id.
 
         Args:
             instance_id:
@@ -51,7 +50,7 @@ class Instance(Document):
 
     @staticmethod
     def get_by_name(instance_name):
-        """ Return the object with the given name.
+        """Return the object with the given name.
 
         Args:
             instance_name:
@@ -69,7 +68,7 @@ class Instance(Document):
 
     @staticmethod
     def get_by_endpoint_starting_with(instance_endpoint):
-        """ Return the object with the given endpoint.
+        """Return the object with the given endpoint.
 
         Args:
             instance_endpoint:
@@ -86,7 +85,7 @@ class Instance(Document):
             raise exceptions.ModelError(str(ex))
 
     def save_object(self):
-        """ Custom save.
+        """Custom save.
 
         Returns:
 
@@ -102,7 +101,7 @@ class Instance(Document):
             raise exceptions.ModelError(str(ex))
 
     def check_instance_name(self):
-        """ Test if the name is the name of the local instance.
+        """Test if the name is the name of the local instance.
 
         Returns:
 
@@ -113,7 +112,7 @@ class Instance(Document):
             )
 
     def clean(self):
-        """ Clean is called before saving
+        """Clean is called before saving
 
         Returns:
 

@@ -7,14 +7,13 @@ from core_main_app.utils.integration_tests.fixture_interface import FixtureInter
 
 
 class InstanceFixtures(FixtureInterface):
-    """ Instance fixtures
-    """
+    """Instance fixtures"""
 
     data_1 = None
     data_collection = None
 
     def insert_data(self):
-        """ Insert a set of Data.
+        """Insert a set of Data.
 
         Returns:
 
@@ -23,7 +22,7 @@ class InstanceFixtures(FixtureInterface):
         self.generate_data_collection()
 
     def generate_data_collection(self):
-        """ Generate a Data collection.
+        """Generate a Data collection.
 
         Returns:
 

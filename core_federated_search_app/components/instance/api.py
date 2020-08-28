@@ -14,7 +14,7 @@ from core_main_app.utils.requests_utils import requests_utils
 
 
 def get_all():
-    """ List all instance.
+    """List all instance.
 
     Returns: instance collection
 
@@ -23,7 +23,7 @@ def get_all():
 
 
 def get_by_id(instance_id):
-    """ Return instance object with the given id.
+    """Return instance object with the given id.
 
     Args:
         instance_id:
@@ -35,7 +35,7 @@ def get_by_id(instance_id):
 
 
 def get_by_name(instance_name):
-    """ Return instance object with the given name.
+    """Return instance object with the given name.
 
     Args:
         instance_name:
@@ -47,7 +47,7 @@ def get_by_name(instance_name):
 
 
 def get_by_endpoint_starting_with(instance_endpoint):
-    """ Return instance object with the given get_by_endpoint.
+    """Return instance object with the given get_by_endpoint.
 
     Args:
         instance_endpoint:
@@ -59,7 +59,7 @@ def get_by_endpoint_starting_with(instance_endpoint):
 
 
 def delete(instance):
-    """ Delete an instance.
+    """Delete an instance.
 
     Args:
         instance:
@@ -71,7 +71,7 @@ def delete(instance):
 
 
 def upsert(instance):
-    """ Update or save an instance.
+    """Update or save an instance.
 
     Args:
         instance:
@@ -83,7 +83,7 @@ def upsert(instance):
 
 
 def add_instance(name, endpoint, client_id, client_secret, username, password, timeout):
-    """ Request the remote and add the instance created.
+    """Request the remote and add the instance created.
 
     Args:
         name:
@@ -126,7 +126,7 @@ def add_instance(name, endpoint, client_id, client_secret, username, password, t
 
 
 def refresh_instance_token(instance, client_id, client_secret, timeout):
-    """ Refresh the instance token.
+    """Refresh the instance token.
 
     Args:
         instance:
@@ -155,7 +155,7 @@ def refresh_instance_token(instance, client_id, client_secret, timeout):
 
 
 def get_blob_response_from_url(url_base, url):
-    """ Get the blob response from an url
+    """Get the blob response from an url
 
     Args:
         url_base: {uri.scheme}://{uri.netloc}
@@ -174,7 +174,7 @@ def get_blob_response_from_url(url_base, url):
 
 
 def _create_instance_object_from_request_response(name, endpoint, content):
-    """ Create an Instance object from a request.
+    """Create an Instance object from a request.
 
     Args:
         name:
@@ -199,15 +199,15 @@ def _create_instance_object_from_request_response(name, endpoint, content):
 
 
 def _update_instance_object_from_request_response(instance, content):
-    """ Update an instance object from a response content.
+    """Update an instance object from a response content.
 
-        Args:
-            instance:
-            content:
+    Args:
+        instance:
+        content:
 
-        Returns:
+    Returns:
 
-        """
+    """
     # Calculate the expiration date
     now = datetime.now()
     delta = timedelta(seconds=int(json.loads(content)["expires_in"]))
@@ -220,7 +220,7 @@ def _update_instance_object_from_request_response(instance, content):
 
 
 def _get_url_for_request(instance):
-    """ Get an URL from an instance.
+    """Get an URL from an instance.
 
     Args:
         instance:
@@ -239,7 +239,7 @@ def _get_url_for_request(instance):
 
 
 def _update_instance_token_from_response(instance, response):
-    """ Update an instance token from an http response.
+    """Update an instance token from an http response.
 
     Args:
         instance:

@@ -16,13 +16,12 @@ from core_main_app.commons import exceptions
 
 
 class InstanceList(APIView):
-    """ List all Instances, or create a new Instance
-    """
+    """List all Instances, or create a new Instance"""
 
     permission_classes = (IsAdminUser,)
 
     def get(self, request):
-        """ Return http response with all Instances
+        """Return http response with all Instances
 
         Args:
 
@@ -49,7 +48,7 @@ class InstanceList(APIView):
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request):
-        """ Save an Instance
+        """Save an Instance
 
         Parameters:
 
@@ -93,13 +92,12 @@ class InstanceList(APIView):
 
 
 class InstanceDetail(APIView):
-    """" Retrieve, edit or delete an Instance
-    """
+    """ " Retrieve, edit or delete an Instance"""
 
     permission_classes = (IsAdminUser,)
 
     def get_object(self, pk):
-        """ Retrieve an Instance
+        """Retrieve an Instance
 
         Args:
 
@@ -115,7 +113,7 @@ class InstanceDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        """ Get Instance
+        """Get Instance
 
         Args:
 
@@ -146,7 +144,7 @@ class InstanceDetail(APIView):
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request, pk):
-        """ Update the Instance
+        """Update the Instance
 
         Parameters:
 
@@ -194,7 +192,7 @@ class InstanceDetail(APIView):
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, pk):
-        """ Delete Instance
+        """Delete Instance
 
         Args:
 
@@ -226,13 +224,12 @@ class InstanceDetail(APIView):
 
 
 class InstanceRefreshToken(APIView):
-    """" Refresh of token an Instance
-    """
+    """ " Refresh of token an Instance"""
 
     permission_classes = (IsAdminUser,)
 
     def get_object(self, pk):
-        """ Retrieve an Instance
+        """Retrieve an Instance
 
         Args:
 
@@ -248,7 +245,7 @@ class InstanceRefreshToken(APIView):
             raise Http404
 
     def patch(self, request, pk):
-        """ Refresh token of an Instance
+        """Refresh token of an Instance
 
         Parameters:
 
