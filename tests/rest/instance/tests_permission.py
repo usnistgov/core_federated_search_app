@@ -199,7 +199,11 @@ class TestInstanceDetailDeletePermission(SimpleTestCase):
     @patch.object(Instance, "get_by_id")
     def test_is_staff_returns_http_204(self, instance_get_by_id, instance_delete):
         instance_get_by_id.return_value = Instance(
-            "mock", "http://mock.com/", "mock", "mock", datetime.datetime.now()
+            name="mock",
+            endpoint="http://mock.com/",
+            access_token="mock",
+            refresh_token="mock",
+            expires=datetime.datetime.now(),
         )
 
         response = RequestMock.do_request_delete(
