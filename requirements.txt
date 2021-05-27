@@ -1,9 +1,9 @@
-Django==2.2.20
+Django
 django-oauth-toolkit==1.4.1
-django-mongoengine==0.4.1
-djangorestframework==3.12.2
-django-rest-framework-mongoengine==3.4.1
-django-simple-menu==1.2.1
-mongoengine==0.23.0
-requests==2.25.1
-future==0.18.2
+django-mongoengine
+djangorestframework
+django-rest-framework-mongoengine
+django-simple-menu
+mongoengine
+requests
+future
