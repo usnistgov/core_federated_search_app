@@ -1,8 +1,8 @@
 """ Admin views Core explore Federated Search App
 """
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse
 from django.http.response import HttpResponseRedirect
+from django.urls import reverse
 from requests.exceptions import SSLError
 
 import core_federated_search_app.components.instance.api as api_instance
@@ -81,7 +81,7 @@ def add_repository(request):
                 )
                 if instance_object is not None:
                     return HttpResponseRedirect(
-                        reverse("admin:core_federated_search_app_repositories")
+                        reverse("core-admin:core_federated_search_app_repositories")
                     )
             except common_exception.NotUniqueError:
                 context[

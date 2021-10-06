@@ -9,6 +9,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sites",
     # Local apps
+    "core_main_app",
+    "core_explore_common_app",
+    "core_federated_search_app",
     "tests",
 ]
 
@@ -21,6 +24,18 @@ MIDDLEWARE = (
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
 )
+
+# IN-MEMORY TEST DATABASE
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
+    },
+}
 
 TEMPLATES = [
     {
@@ -38,3 +53,5 @@ TEMPLATES = [
         },
     },
 ]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

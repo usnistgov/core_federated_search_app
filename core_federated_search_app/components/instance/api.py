@@ -79,7 +79,8 @@ def upsert(instance):
     Returns:
 
     """
-    return instance.save_object()
+    instance.save_object()
+    return instance
 
 
 def add_instance(name, endpoint, client_id, client_secret, username, password, timeout):
@@ -118,7 +119,8 @@ def add_instance(name, endpoint, client_id, client_secret, username, password, t
         )
 
         # upsert the instance
-        return upsert(instance)
+        upsert(instance)
+        return instance
     else:
         raise ApiError(
             "Unable to get access to the remote instance using these parameters."
@@ -147,7 +149,8 @@ def refresh_instance_token(instance, client_id, client_secret, timeout):
         instance = _update_instance_object_from_request_response(instance, r.content)
 
         # upsert the instance
-        return upsert(instance)
+        upsert(instance)
+        return instance
     else:
         raise ApiError(
             "Unable to get access to the remote instance using these parameters."

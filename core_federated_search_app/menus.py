@@ -7,12 +7,12 @@ from menu import Menu, MenuItem
 federated_children = (
     MenuItem(
         "Repositories",
-        reverse("admin:core_federated_search_app_repositories"),
+        reverse("core-admin:core_federated_search_app_repositories"),
         icon="list",
     ),
     MenuItem(
         "Add Repository",
-        reverse("admin:core_federated_search_app_repositories_add"),
+        reverse("core-admin:core_federated_search_app_repositories_add"),
         icon="plus-circle",
     ),
 )

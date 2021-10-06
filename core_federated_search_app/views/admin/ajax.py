@@ -35,8 +35,8 @@ def delete_repository(request):
 
 class EditRepositoryView(EditObjectModalView):
     form_class = EditRepositoryForm
-    document = Instance
-    success_url = reverse_lazy("admin:core_federated_search_app_repositories")
+    model = Instance
+    success_url = reverse_lazy("core-admin:core_federated_search_app_repositories")
     success_message = "Repository edited with success."
 
     def _save(self, form):
