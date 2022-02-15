@@ -8,6 +8,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.sites",
+    "django_celery_beat",
     # Local apps
     "core_main_app",
     "core_explore_common_app",
@@ -55,3 +56,4 @@ TEMPLATES = [
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
