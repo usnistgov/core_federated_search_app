@@ -102,7 +102,7 @@ class Instance(models.Model):
         try:
             self.check_instance_name()
             return self.save()
-        except IntegrityError as e:
+        except IntegrityError:
             raise exceptions.NotUniqueError(
                 "Unable to create the new repository: Not Unique"
             )
