@@ -41,7 +41,8 @@ def manage_repositories(request):
                 "is_raw": False,
             },
             EditTemplateVersionManagerView.get_modal_js_path(),
-        ]
+        ],
+        "css": ["core_federated_search_app/admin/css/repositories.css"],
     }
 
     return admin_render(
