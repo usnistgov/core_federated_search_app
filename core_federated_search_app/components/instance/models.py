@@ -52,8 +52,8 @@ class Instance(models.Model):
         """
         try:
             return Instance.objects.get(pk=str(instance_id))
-        except ObjectDoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -70,8 +70,8 @@ class Instance(models.Model):
         """
         try:
             return Instance.objects.get(name=str(instance_name))
-        except ObjectDoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -88,8 +88,8 @@ class Instance(models.Model):
         """
         try:
             return Instance.objects.get(endpoint__startswith=str(instance_endpoint))
-        except ObjectDoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 

@@ -6,18 +6,22 @@ from django.test import SimpleTestCase
 from mock.mock import patch
 from rest_framework import status
 
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from core_main_app.utils.tests_tools.RequestMock import RequestMock
 from core_federated_search_app.components.instance.models import Instance
 from core_federated_search_app.rest.instance import views as instance_views
 from core_federated_search_app.rest.instance.serializers import (
     InstanceSerializerModel,
     InstanceSerializerCreate,
 )
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from core_main_app.utils.tests_tools.RequestMock import RequestMock
 
 
 class TestInstanceListGetPermission(SimpleTestCase):
+    """Test Instance List Get Permission"""
+
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_get(
             instance_views.InstanceList.as_view(),
             create_mock_user("1", is_anonymous=True),
@@ -26,6 +30,8 @@ class TestInstanceListGetPermission(SimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_is_authenticated_returns_http_403(self):
+        """test_is_authenticated_returns_http_403"""
+
         response = RequestMock.do_request_get(
             instance_views.InstanceList.as_view(),
             create_mock_user("1", is_anonymous=False),
@@ -38,6 +44,8 @@ class TestInstanceListGetPermission(SimpleTestCase):
     def test_is_staff_returns_http_200(
         self, instance_serializer_data, instance_get_all
     ):
+        """test_is_staff_returns_http_200"""
+
         instance_get_all.return_value = {}
         instance_serializer_data.return_value = True
 
@@ -50,7 +58,11 @@ class TestInstanceListGetPermission(SimpleTestCase):
 
 
 class TestInstanceListPostPermission(SimpleTestCase):
+    """Test Instance List Post Permission"""
+
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_post(
             instance_views.InstanceList.as_view(),
             create_mock_user("1", is_anonymous=True),
@@ -59,6 +71,8 @@ class TestInstanceListPostPermission(SimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_is_authenticated_returns_http_403(self):
+        """test_is_authenticated_returns_http_403"""
+
         response = RequestMock.do_request_post(
             instance_views.InstanceList.as_view(),
             create_mock_user("1", is_anonymous=False),
@@ -75,6 +89,8 @@ class TestInstanceListPostPermission(SimpleTestCase):
         instance_serializer_save,
         instance_serializer_is_valid,
     ):
+        """test_is_staff_returns_http_201"""
+
         instance_serializer_is_valid.return_value = {}
         instance_serializer_save.return_value = None
         instance_serializer_data.return_value = True
@@ -88,10 +104,16 @@ class TestInstanceListPostPermission(SimpleTestCase):
 
 
 class TestInstanceDetailGetPermission(SimpleTestCase):
+    """Test Instance Detail Get Permission"""
+
     def setUp(self):
+        """setUp"""
+
         self.fake_id = "507f1f77bcf86cd799439011"
 
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_get(
             instance_views.InstanceDetail.as_view(),
             create_mock_user("1", is_anonymous=True),
@@ -100,6 +122,8 @@ class TestInstanceDetailGetPermission(SimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_is_authenticated_returns_http_403(self):
+        """test_is_authenticated_returns_http_403"""
+
         response = RequestMock.do_request_get(
             instance_views.InstanceDetail.as_view(),
             create_mock_user("1", is_anonymous=False),
@@ -112,6 +136,8 @@ class TestInstanceDetailGetPermission(SimpleTestCase):
     def test_is_staff_returns_http_200(
         self, instance_serializer_data, instance_get_all
     ):
+        """test_is_staff_returns_http_200"""
+
         instance_get_all.return_value = {}
         instance_serializer_data.return_value = True
 
@@ -125,10 +151,16 @@ class TestInstanceDetailGetPermission(SimpleTestCase):
 
 
 class TestInstanceDetailPatchPermission(SimpleTestCase):
+    """Test Instance Detail Patch Permission"""
+
     def setUp(self):
+        """setUp"""
+
         self.fake_id = "507f1f77bcf86cd799439011"
 
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_patch(
             instance_views.InstanceDetail.as_view(),
             create_mock_user("1", is_anonymous=True),
@@ -138,6 +170,8 @@ class TestInstanceDetailPatchPermission(SimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_is_authenticated_returns_http_403(self):
+        """test_is_authenticated_returns_http_403"""
+
         response = RequestMock.do_request_patch(
             instance_views.InstanceDetail.as_view(),
             create_mock_user("1", is_anonymous=False),
@@ -157,6 +191,8 @@ class TestInstanceDetailPatchPermission(SimpleTestCase):
         instance_serializer_is_valid,
         instance_get_by_id,
     ):
+        """test_is_staff_returns_http_200"""
+
         instance_get_by_id.return_value = {}
         instance_serializer_is_valid.return_value = {}
         instance_serializer_save.return_value = None
@@ -174,10 +210,16 @@ class TestInstanceDetailPatchPermission(SimpleTestCase):
 
 
 class TestInstanceDetailDeletePermission(SimpleTestCase):
+    """Test Instance Detail Delete Permission"""
+
     def setUp(self):
+        """setUp"""
+
         self.fake_id = "507f1f77bcf86cd799439011"
 
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_delete(
             instance_views.InstanceDetail.as_view(),
             create_mock_user("1", is_anonymous=True),
@@ -187,6 +229,8 @@ class TestInstanceDetailDeletePermission(SimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_is_authenticated_returns_http_403(self):
+        """test_is_authenticated_returns_http_403"""
+
         response = RequestMock.do_request_delete(
             instance_views.InstanceDetail.as_view(),
             create_mock_user("1", is_anonymous=False),
@@ -198,6 +242,8 @@ class TestInstanceDetailDeletePermission(SimpleTestCase):
     @patch.object(Instance, "delete")
     @patch.object(Instance, "get_by_id")
     def test_is_staff_returns_http_204(self, instance_get_by_id, instance_delete):
+        """test_is_staff_returns_http_204"""
+
         instance_get_by_id.return_value = Instance(
             name="mock",
             endpoint="http://mock.com/",
@@ -216,10 +262,16 @@ class TestInstanceDetailDeletePermission(SimpleTestCase):
 
 
 class TestInstanceRefreshTokenPatchPermission(SimpleTestCase):
+    """Test Instance Refresh Token Patch Permission"""
+
     def setUp(self):
+        """setUp"""
+
         self.fake_id = "507f1f77bcf86cd799439011"
 
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_patch(
             instance_views.InstanceRefreshToken.as_view(),
             create_mock_user("1", is_anonymous=True),
@@ -229,6 +281,8 @@ class TestInstanceRefreshTokenPatchPermission(SimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_is_authenticated_returns_http_403(self):
+        """test_is_authenticated_returns_http_403"""
+
         response = RequestMock.do_request_patch(
             instance_views.InstanceRefreshToken.as_view(),
             create_mock_user("1", is_anonymous=False),
@@ -248,6 +302,7 @@ class TestInstanceRefreshTokenPatchPermission(SimpleTestCase):
         instance_get_by_id,
         instance_refresh_token,
     ):
+        """test_is_staff_returns_http_200"""
         instance_get_by_id.return_value = {}
         instance_serializer_is_valid.return_value = {}
         instance_refresh_token.return_value = {}

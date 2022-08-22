@@ -10,7 +10,7 @@ from core_federated_search_app.components.instance.models import Instance
 class InstanceSerializerModel(ModelSerializer):
     """Instance serializer"""
 
-    class Meta(object):
+    class Meta:
         """Meta"""
 
         model = Instance
@@ -35,7 +35,7 @@ class InstanceSerializerCreate(ModelSerializer):
     username = CharField()
     password = CharField()
 
-    class Meta(object):
+    class Meta:
         """Meta"""
 
         model = Instance

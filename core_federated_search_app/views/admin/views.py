@@ -5,11 +5,11 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from requests.exceptions import SSLError
 
-import core_federated_search_app.components.instance.api as api_instance
-import core_main_app.commons.exceptions as common_exception
-from core_federated_search_app.views.admin.forms import RepositoryForm
 from core_main_app.utils.rendering import admin_render
 from core_main_app.views.common.ajax import EditTemplateVersionManagerView
+import core_main_app.commons.exceptions as common_exception
+import core_federated_search_app.components.instance.api as api_instance
+from core_federated_search_app.views.admin.forms import RepositoryForm
 
 
 @staff_member_required

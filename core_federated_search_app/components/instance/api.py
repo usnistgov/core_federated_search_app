@@ -4,13 +4,13 @@ import json
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
+from core_main_app.commons.exceptions import ApiError
+from core_main_app.utils.requests_utils import requests_utils
 from core_explore_common_app.utils.protocols.oauth2 import (
     post_request_token,
     post_refresh_token,
 )
 from core_federated_search_app.components.instance.models import Instance
-from core_main_app.commons.exceptions import ApiError
-from core_main_app.utils.requests_utils import requests_utils
 
 
 def get_all():
@@ -108,23 +108,23 @@ def add_instance(name, endpoint, client_id, client_secret, username, password, t
     name = name.strip()
 
     # Request the remote
-    r = post_request_token(
+    response = post_request_token(
         endpoint, client_id, client_secret, timeout, username, password
     )
 
-    if r.status_code == 200:
-        # create the instance from a request
-        instance = _create_instance_object_from_request_response(
-            name, endpoint, r.content
-        )
-
-        # upsert the instance
-        upsert(instance)
-        return instance
-    else:
+    if response.status_code != 200:
         raise ApiError(
             "Unable to get access to the remote instance using these parameters."
         )
+
+    # create the instance from a request
+    instance = _create_instance_object_from_request_response(
+        name, endpoint, response.content
+    )
+
+    # upsert the instance
+    upsert(instance)
+    return instance
 
 
 def refresh_instance_token(instance, client_id, client_secret, timeout):
@@ -140,21 +140,21 @@ def refresh_instance_token(instance, client_id, client_secret, timeout):
 
     """
     # Request the remote
-    r = post_refresh_token(
+    response = post_refresh_token(
         instance.endpoint, client_id, client_secret, timeout, instance.refresh_token
     )
 
-    if r.status_code == 200:
-        # create the instance from a request
-        instance = _update_instance_object_from_request_response(instance, r.content)
-
-        # upsert the instance
-        upsert(instance)
-        return instance
-    else:
+    if response.status_code != 200:
         raise ApiError(
             "Unable to get access to the remote instance using these parameters."
         )
+
+    # create the instance from a request
+    instance = _update_instance_object_from_request_response(instance, response.content)
+
+    # upsert the instance
+    upsert(instance)
+    return instance
 
 
 def get_blob_response_from_url(url_base, url):

@@ -4,12 +4,13 @@ from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import re_path
 
+from core_main_app.admin import core_admin_site
+
 from core_federated_search_app.components.instance.models import Instance
 from core_federated_search_app.views.admin import (
     views as admin_views,
     ajax as admin_ajax,
 )
-from core_main_app.admin import core_admin_site
 
 admin_urls = [
     re_path(

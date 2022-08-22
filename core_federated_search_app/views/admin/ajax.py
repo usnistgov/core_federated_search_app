@@ -8,12 +8,12 @@ from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.html import escape
 
+from core_main_app.views.common.ajax import EditObjectModalView
 import core_federated_search_app.components.instance.api as instance_api
 import core_federated_search_app.views.admin.forms as admin_forms
 from core_federated_search_app.commons.exceptions import ExploreFederatedSearchAjaxError
 from core_federated_search_app.components.instance.models import Instance
 from core_federated_search_app.views.admin.forms import EditRepositoryForm
-from core_main_app.views.common.ajax import EditObjectModalView
 
 
 @staff_member_required
@@ -26,9 +26,9 @@ def delete_repository(request):
     try:
         instance = instance_api.get_by_id(request.GET["id"])
         instance_api.delete(instance)
-    except Exception as e:
+    except Exception as exception:
         return HttpResponseBadRequest(
-            escape(str(e)), content_type="application/javascript"
+            escape(str(exception)), content_type="application/javascript"
         )
     return HttpResponse(json.dumps({}), content_type="application/javascript")
 
@@ -43,8 +43,8 @@ class EditRepositoryView(EditObjectModalView):
         # Save treatment.
         try:
             instance_api.upsert(self.object)
-        except Exception as e:
-            form.add_error(None, str(e))
+        except Exception as exception:
+            form.add_error(None, str(exception))
 
 
 @staff_member_required
@@ -60,10 +60,10 @@ def refresh_repository(request):
     try:
         if request.method == "POST":
             return _refresh_repository_post(request)
-        else:
-            return _refresh_repository_get(request)
-    except Exception as e:
-        return HttpResponseBadRequest(escape(str(e)))
+
+        return _refresh_repository_get(request)
+    except Exception as exception:
+        return HttpResponseBadRequest(escape(str(exception)))
 
 
 def _refresh_repository_post(request):
@@ -92,10 +92,10 @@ def _refresh_repository_post(request):
                 request.POST["timeout"],
             )
             return HttpResponse(json.dumps({}), content_type="application/javascript")
-        except Exception as e:
-            raise ExploreFederatedSearchAjaxError(str(e))
-    else:
-        raise ExploreFederatedSearchAjaxError("All fields are required.")
+        except Exception as exception:
+            raise ExploreFederatedSearchAjaxError(str(exception))
+
+    raise ExploreFederatedSearchAjaxError("All fields are required.")
 
 
 def _refresh_repository_get(request):

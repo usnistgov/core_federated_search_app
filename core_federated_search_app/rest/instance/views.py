@@ -7,12 +7,12 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core_main_app.commons import exceptions
 import core_federated_search_app.components.instance.api as instance_api
 from core_federated_search_app.rest.instance.serializers import (
     InstanceSerializerCreate,
     InstanceSerializerModel,
 )
-from core_main_app.commons import exceptions
 
 
 class InstanceList(APIView):
