@@ -2,8 +2,8 @@
 """
 import datetime
 
-from core_federated_search_app.components.instance.models import Instance
 from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
+from core_federated_search_app.components.instance.models import Instance
 
 
 class InstanceFixtures(FixtureInterface):
@@ -33,5 +33,6 @@ class InstanceFixtures(FixtureInterface):
             access_token="token",
             refresh_token="refresh",
             expires=datetime.datetime.now(),
-        ).save()
+        )
+        self.data_1.save()
         self.data_collection = [self.data_1]

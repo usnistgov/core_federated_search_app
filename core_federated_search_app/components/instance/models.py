@@ -1,24 +1,33 @@
 """ Instance model
 """
 from django.conf import settings
-from django_mongoengine import fields, Document
-from mongoengine import errors as mongoengine_errors
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import RegexValidator
+from django.db import models, IntegrityError
 
 from core_main_app.commons import exceptions
-from core_main_app.utils.validation.regex_validation import not_empty_or_whitespaces
-from django_mongoengine import fields, Document
+from core_main_app.commons.regex import NOT_EMPTY_OR_WHITESPACES
 
 
-class Instance(Document):
+class Instance(models.Model):
     """Represents an instance of a remote project"""
 
-    name = fields.StringField(
-        blank=False, unique=True, validation=not_empty_or_whitespaces
+    name = models.CharField(
+        blank=False,
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=NOT_EMPTY_OR_WHITESPACES,
+                message="Title must not be empty or only whitespaces",
+                code="invalid_title",
+            ),
+        ],
+        max_length=200,
     )
-    endpoint = fields.URLField(blank=False, unique=True)
-    access_token = fields.StringField(blank=False)
-    refresh_token = fields.StringField(blank=False)
-    expires = fields.DateTimeField(blank=False)
+    endpoint = models.URLField(blank=False, unique=True)
+    access_token = models.CharField(blank=False, max_length=200)
+    refresh_token = models.CharField(blank=False, max_length=200)
+    expires = models.DateTimeField(blank=False)
 
     @staticmethod
     def get_all():
@@ -28,7 +37,7 @@ class Instance(Document):
             instance collection
 
         """
-        return Instance.objects().all()
+        return Instance.objects.all()
 
     @staticmethod
     def get_by_id(instance_id):
@@ -43,8 +52,8 @@ class Instance(Document):
         """
         try:
             return Instance.objects.get(pk=str(instance_id))
-        except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -61,8 +70,8 @@ class Instance(Document):
         """
         try:
             return Instance.objects.get(name=str(instance_name))
-        except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -79,8 +88,8 @@ class Instance(Document):
         """
         try:
             return Instance.objects.get(endpoint__startswith=str(instance_endpoint))
-        except mongoengine_errors.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -93,7 +102,7 @@ class Instance(Document):
         try:
             self.check_instance_name()
             return self.save()
-        except mongoengine_errors.NotUniqueError as e:
+        except IntegrityError:
             raise exceptions.NotUniqueError(
                 "Unable to create the new repository: Not Unique"
             )
@@ -118,3 +127,11 @@ class Instance(Document):
 
         """
         self.name = self.name.strip()
+
+    def __str__(self):
+        """Instance object as string.
+
+        Returns:
+
+        """
+        return self.name

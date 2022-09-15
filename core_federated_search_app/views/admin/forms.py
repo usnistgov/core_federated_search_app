@@ -1,10 +1,10 @@
 """ Django forms of ADMIN core explore federated search
 """
 from django import forms
+from django.forms import ModelForm
 
-from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.validators import BlankSpacesValidator
-from django_mongoengine.forms import DocumentForm
+from core_federated_search_app.components.instance.models import Instance
 
 # list of possible protocols available in the form
 PROTOCOLS = (("http", "HTTP"), ("https", "HTTPS"))
@@ -81,7 +81,9 @@ class RefreshRepositoryForm(forms.Form):
     )
 
 
-class EditRepositoryForm(DocumentForm):
+class EditRepositoryForm(ModelForm):
+    """Form to edit repository"""
+
     name = forms.CharField(
         label="Name",
         widget=forms.TextInput(
@@ -89,6 +91,8 @@ class EditRepositoryForm(DocumentForm):
         ),
     )
 
-    class Meta(object):
-        document = Instance
+    class Meta:
+        """Meta"""
+
+        model = Instance
         fields = ["name"]
