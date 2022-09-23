@@ -101,7 +101,7 @@ def add_instance(name, endpoint, client_id, client_secret, username, password, t
     try:
         # parse the endpoint
         endpoint = urlparse(endpoint).geturl().strip("/")
-    except:
+    except Exception:
         raise ApiError("Endpoint is not well formatted.")
 
     # delete extra white space

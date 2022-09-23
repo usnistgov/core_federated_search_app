@@ -80,7 +80,7 @@ def _refresh_repository_post(request):
         try:
             repository_id = request.POST["id"]
             instance = instance_api.get_by_id(repository_id)
-        except:
+        except Exception:
             raise ExploreFederatedSearchAjaxError(
                 "Error: Unable to access the registered instance."
             )
