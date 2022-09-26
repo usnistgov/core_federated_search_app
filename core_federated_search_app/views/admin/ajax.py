@@ -11,7 +11,9 @@ from django.utils.html import escape
 from core_main_app.views.common.ajax import EditObjectModalView
 import core_federated_search_app.components.instance.api as instance_api
 import core_federated_search_app.views.admin.forms as admin_forms
-from core_federated_search_app.commons.exceptions import ExploreFederatedSearchAjaxError
+from core_federated_search_app.commons.exceptions import (
+    ExploreFederatedSearchAjaxError,
+)
 from core_federated_search_app.components.instance.models import Instance
 from core_federated_search_app.views.admin.forms import EditRepositoryForm
 
@@ -36,7 +38,9 @@ def delete_repository(request):
 class EditRepositoryView(EditObjectModalView):
     form_class = EditRepositoryForm
     model = Instance
-    success_url = reverse_lazy("core-admin:core_federated_search_app_repositories")
+    success_url = reverse_lazy(
+        "core-admin:core_federated_search_app_repositories"
+    )
     success_message = "Repository edited with success."
 
     def _save(self, form):
@@ -91,7 +95,9 @@ def _refresh_repository_post(request):
                 request.POST["client_secret"],
                 request.POST["timeout"],
             )
-            return HttpResponse(json.dumps({}), content_type="application/javascript")
+            return HttpResponse(
+                json.dumps({}), content_type="application/javascript"
+            )
         except Exception as exception:
             raise ExploreFederatedSearchAjaxError(str(exception))
 

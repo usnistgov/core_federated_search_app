@@ -17,4 +17,6 @@ federated_children = (
     ),
 )
 
-Menu.add_item("admin", MenuItem("FEDERATED SEARCH", None, children=federated_children))
+Menu.add_item(
+    "admin", MenuItem("FEDERATED SEARCH", None, children=federated_children)
+)

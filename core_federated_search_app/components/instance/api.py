@@ -83,7 +83,9 @@ def upsert(instance):
     return instance
 
 
-def add_instance(name, endpoint, client_id, client_secret, username, password, timeout):
+def add_instance(
+    name, endpoint, client_id, client_secret, username, password, timeout
+):
     """Request the remote and add the instance created.
 
     Args:
@@ -141,7 +143,11 @@ def refresh_instance_token(instance, client_id, client_secret, timeout):
     """
     # Request the remote
     response = post_refresh_token(
-        instance.endpoint, client_id, client_secret, timeout, instance.refresh_token
+        instance.endpoint,
+        client_id,
+        client_secret,
+        timeout,
+        instance.refresh_token,
     )
 
     if response.status_code != 200:
@@ -150,7 +156,9 @@ def refresh_instance_token(instance, client_id, client_secret, timeout):
         )
 
     # create the instance from a request
-    instance = _update_instance_object_from_request_response(instance, response.content)
+    instance = _update_instance_object_from_request_response(
+        instance, response.content
+    )
 
     # upsert the instance
     upsert(instance)

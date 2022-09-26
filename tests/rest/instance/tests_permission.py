@@ -241,7 +241,9 @@ class TestInstanceDetailDeletePermission(SimpleTestCase):
 
     @patch.object(Instance, "delete")
     @patch.object(Instance, "get_by_id")
-    def test_is_staff_returns_http_204(self, instance_get_by_id, instance_delete):
+    def test_is_staff_returns_http_204(
+        self, instance_get_by_id, instance_delete
+    ):
         """test_is_staff_returns_http_204"""
 
         instance_get_by_id.return_value = Instance(
@@ -291,7 +293,9 @@ class TestInstanceRefreshTokenPatchPermission(SimpleTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    @patch("core_federated_search_app.components.instance.api.refresh_instance_token")
+    @patch(
+        "core_federated_search_app.components.instance.api.refresh_instance_token"
+    )
     @patch.object(Instance, "get_by_id")
     @patch.object(InstanceSerializerModel, "is_valid")
     @patch.object(InstanceSerializerModel, "data")

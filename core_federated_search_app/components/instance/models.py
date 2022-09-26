@@ -87,7 +87,9 @@ class Instance(models.Model):
 
         """
         try:
-            return Instance.objects.get(endpoint__startswith=str(instance_endpoint))
+            return Instance.objects.get(
+                endpoint__startswith=str(instance_endpoint)
+            )
         except ObjectDoesNotExist as exception:
             raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:

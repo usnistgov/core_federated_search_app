@@ -15,7 +15,12 @@ class InstanceSerializerModel(ModelSerializer):
 
         model = Instance
         fields = "__all__"
-        read_only_fields = ("endpoint", "access_token", "refresh_token", "expires")
+        read_only_fields = (
+            "endpoint",
+            "access_token",
+            "refresh_token",
+            "expires",
+        )
 
     def create(self, validated_data):
         raise Exception("Wrong serializer for creation")

@@ -72,7 +72,10 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_get(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
@@ -87,7 +90,10 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_get(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
@@ -102,11 +108,16 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_get(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(
+            response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 
 class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
@@ -129,7 +140,10 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_delete(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
@@ -144,7 +158,10 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_delete(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
@@ -159,11 +176,16 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_delete(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(
+            response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
     def test_post_return_204_if_document_is_deleted_whit_success(self):
         """test_post_return_204_if_document_is_deleted_whit_success"""
@@ -174,7 +196,10 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_delete(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
@@ -201,7 +226,10 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_patch(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
@@ -216,7 +244,10 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_patch(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
@@ -231,11 +262,16 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_patch(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(
+            response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
     def test_patch_returns_200_when_data_are_valid_with_authorized_user(self):
         """test_patch_returns_200_when_data_are_valid_with_authorized_user"""
@@ -248,7 +284,10 @@ class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
 
         # Act
         response = RequestMock.do_request_patch(
-            instance_views.InstanceDetail.as_view(), user, self.data, self.param
+            instance_views.InstanceDetail.as_view(),
+            user,
+            self.data,
+            self.param,
         )
 
         # Assert

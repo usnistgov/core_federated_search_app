@@ -39,13 +39,17 @@ class InstanceList(APIView):
             instance_object_list = instance_api.get_all()
 
             # Serialize object
-            return_value = InstanceSerializerModel(instance_object_list, many=True)
+            return_value = InstanceSerializerModel(
+                instance_object_list, many=True
+            )
 
             # Return response
             return Response(return_value.data)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def post(self, request):
         """Save an Instance
@@ -82,13 +86,17 @@ class InstanceList(APIView):
             instance_serializer.is_valid(raise_exception=True)
             # save or update the object
             instance_serializer.save()
-            return Response(instance_serializer.data, status=status.HTTP_201_CREATED)
+            return Response(
+                instance_serializer.data, status=status.HTTP_201_CREATED
+            )
         except ValidationError as validation_exception:
             content = {"message": validation_exception.detail}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class InstanceDetail(APIView):
@@ -141,7 +149,9 @@ class InstanceDetail(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def patch(self, request, pk):
         """Update the Instance
@@ -180,7 +190,9 @@ class InstanceDetail(APIView):
             # Save data
             instance_serializer.save()
             # Return response
-            return Response(instance_serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                instance_serializer.data, status=status.HTTP_200_OK
+            )
         except Http404:
             content = {"message": "Instance not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
@@ -189,7 +201,9 @@ class InstanceDetail(APIView):
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def delete(self, request, pk):
         """Delete Instance
@@ -220,7 +234,9 @@ class InstanceDetail(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class InstanceRefreshToken(APIView):
@@ -289,4 +305,6 @@ class InstanceRefreshToken(APIView):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

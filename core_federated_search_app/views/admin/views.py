@@ -82,7 +82,9 @@ def add_repository(request):
                 )
                 if instance_object is not None:
                     return HttpResponseRedirect(
-                        reverse("core-admin:core_federated_search_app_repositories")
+                        reverse(
+                            "core-admin:core_federated_search_app_repositories"
+                        )
                     )
             except common_exception.NotUniqueError:
                 context[
