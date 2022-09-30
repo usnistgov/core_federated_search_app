@@ -2,7 +2,7 @@
 """
 from unittest import TestCase
 
-from mock import patch
+from unittest.mock import patch
 
 from core_main_app.commons import exceptions
 from core_federated_search_app.components.instance import api

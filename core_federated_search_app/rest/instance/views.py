@@ -79,7 +79,7 @@ class InstanceList(APIView):
             # Build serializer
             instance_serializer = InstanceSerializerCreate(data=request.data)
             # Validate xsl
-            instance_serializer.is_valid(True)
+            instance_serializer.is_valid(raise_exception=True)
             # save or update the object
             instance_serializer.save()
             return Response(instance_serializer.data, status=status.HTTP_201_CREATED)
@@ -176,7 +176,7 @@ class InstanceDetail(APIView):
                 instance=instance_object, data=request.data, partial=True
             )
             # Validation
-            instance_serializer.is_valid(True)
+            instance_serializer.is_valid(raise_exception=True)
             # Save data
             instance_serializer.save()
             # Return response
