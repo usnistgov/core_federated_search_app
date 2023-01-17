@@ -1,12 +1,12 @@
 """Integration tests for instance rest api
 """
-from rest_framework import status
-
 from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
+from rest_framework import status
+
 import core_federated_search_app.rest.instance.views as instance_views
 from tests.rest.instance.fixtures.fixtures import InstanceFixtures
 

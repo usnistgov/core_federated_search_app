@@ -1,12 +1,11 @@
 """ Instance model
 """
+from core_main_app.commons import exceptions
+from core_main_app.commons.regex import NOT_EMPTY_OR_WHITESPACES
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import RegexValidator
 from django.db import models, IntegrityError
-
-from core_main_app.commons import exceptions
-from core_main_app.commons.regex import NOT_EMPTY_OR_WHITESPACES
 
 
 class Instance(models.Model):

@@ -1,11 +1,12 @@
 """Units tests for xsl Instance rest api
 """
-from django.test import SimpleTestCase
 from unittest.mock import patch
-from rest_framework import status
 
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
+from django.test import SimpleTestCase
+from rest_framework import status
+
 import core_federated_search_app.rest.instance.views as instance_views
 from core_federated_search_app.components.instance.models import Instance
 

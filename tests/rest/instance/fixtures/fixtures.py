@@ -1,11 +1,10 @@
 """ Fixtures files for Instance
 """
-import datetime
-
+from core_federated_search_app.components.instance.models import Instance
+from core_main_app.utils.datetime import datetime_now
 from core_main_app.utils.integration_tests.fixture_interface import (
     FixtureInterface,
 )
-from core_federated_search_app.components.instance.models import Instance
 
 
 class InstanceFixtures(FixtureInterface):
@@ -34,7 +33,7 @@ class InstanceFixtures(FixtureInterface):
             endpoint="http://127.0.0.1:8000/",
             access_token="token",
             refresh_token="refresh",
-            expires=datetime.datetime.now(),
+            expires=datetime_now(),
         )
         self.data_1.save()
         self.data_collection = [self.data_1]

@@ -2,13 +2,13 @@
 """
 import json
 
+from core_main_app.views.common.ajax import EditObjectModalView
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.html import escape
 
-from core_main_app.views.common.ajax import EditObjectModalView
 import core_federated_search_app.components.instance.api as instance_api
 import core_federated_search_app.views.admin.forms as admin_forms
 from core_federated_search_app.commons.exceptions import (

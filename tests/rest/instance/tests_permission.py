@@ -1,19 +1,19 @@
 """ Authentication tests for Instance REST API
 """
-import datetime
+from unittest.mock import patch
 
 from django.test import SimpleTestCase
-from unittest.mock import patch
 from rest_framework import status
 
-from core_main_app.utils.tests_tools.MockUser import create_mock_user
-from core_main_app.utils.tests_tools.RequestMock import RequestMock
 from core_federated_search_app.components.instance.models import Instance
 from core_federated_search_app.rest.instance import views as instance_views
 from core_federated_search_app.rest.instance.serializers import (
     InstanceSerializerModel,
     InstanceSerializerCreate,
 )
+from core_main_app.utils.datetime import datetime_now
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from core_main_app.utils.tests_tools.RequestMock import RequestMock
 
 
 class TestInstanceListGetPermission(SimpleTestCase):
@@ -251,7 +251,7 @@ class TestInstanceDetailDeletePermission(SimpleTestCase):
             endpoint="http://mock.com/",
             access_token="mock",
             refresh_token="mock",
-            expires=datetime.datetime.now(),
+            expires=datetime_now(),
         )
 
         response = RequestMock.do_request_delete(

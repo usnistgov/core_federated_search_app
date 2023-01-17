@@ -1,5 +1,6 @@
 """ REST Views for Instance object
 """
+from core_main_app.commons import exceptions
 from django.http import Http404
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
@@ -7,7 +8,6 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core_main_app.commons import exceptions
 import core_federated_search_app.components.instance.api as instance_api
 from core_federated_search_app.rest.instance.serializers import (
     InstanceSerializerCreate,

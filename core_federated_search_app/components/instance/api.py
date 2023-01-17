@@ -1,16 +1,16 @@
 """ Instance api
 """
 import json
-from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
-from core_main_app.commons.exceptions import ApiError
-from core_main_app.utils.requests_utils import requests_utils
 from core_explore_common_app.utils.protocols.oauth2 import (
     post_request_token,
     post_refresh_token,
 )
 from core_federated_search_app.components.instance.models import Instance
+from core_main_app.commons.exceptions import ApiError
+from core_main_app.utils.datetime import datetime_now, datetime_timedelta
+from core_main_app.utils.requests_utils import requests_utils
 
 
 def get_all():
@@ -196,8 +196,8 @@ def _create_instance_object_from_request_response(name, endpoint, content):
 
     """
     # Calculate the expiration date
-    now = datetime.now()
-    delta = timedelta(seconds=int(json.loads(content)["expires_in"]))
+    now = datetime_now()
+    delta = datetime_timedelta(seconds=int(json.loads(content)["expires_in"]))
     expires = now + delta
     # Create an instance with the response given by the remote server
     return Instance(
@@ -220,8 +220,8 @@ def _update_instance_object_from_request_response(instance, content):
 
     """
     # Calculate the expiration date
-    now = datetime.now()
-    delta = timedelta(seconds=int(json.loads(content)["expires_in"]))
+    now = datetime_now()
+    delta = datetime_timedelta(seconds=int(json.loads(content)["expires_in"]))
     expires = now + delta
     # Update an return the instance object
     instance.access_token = json.loads(content)["access_token"]
@@ -260,8 +260,8 @@ def _update_instance_token_from_response(instance, response):
 
     """
     data = response.json()
-    now = datetime.now()
-    delta = datetime.timedelta(seconds=int(data["expires_in"]))
+    now = datetime_now()
+    delta = datetime_timedelta(seconds=int(data["expires_in"]))
     instance.refresh_token = data["refresh_token"]
     instance.expires = now + delta
     instance.access_token = data["access_token"]

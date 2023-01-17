@@ -1,9 +1,9 @@
 """ Django forms of ADMIN core explore federated search
 """
+from core_main_app.commons.validators import BlankSpacesValidator
 from django import forms
 from django.forms import ModelForm
 
-from core_main_app.commons.validators import BlankSpacesValidator
 from core_federated_search_app.components.instance.models import Instance
 
 # list of possible protocols available in the form
