@@ -1,7 +1,7 @@
 """Integration tests for instance rest api
 """
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
@@ -13,7 +13,7 @@ from tests.rest.instance.fixtures.fixtures import InstanceFixtures
 fixture_data = InstanceFixtures()
 
 
-class TestGetAllInstanceList(MongoIntegrationBaseTestCase):
+class TestGetAllInstanceList(IntegrationBaseTestCase):
     """Test Get All Instance List"""
 
     fixture = fixture_data
@@ -52,7 +52,7 @@ class TestGetAllInstanceList(MongoIntegrationBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
+class TestGetInstanceDetail(IntegrationBaseTestCase):
     """Test Get Instance Detail"""
 
     fixture = fixture_data
@@ -120,7 +120,7 @@ class TestGetInstanceDetail(MongoIntegrationBaseTestCase):
         )
 
 
-class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
+class TestDeleteInstanceDetail(IntegrationBaseTestCase):
     """Test Delete Instance Detail"""
 
     fixture = fixture_data
@@ -206,7 +206,7 @@ class TestDeleteInstanceDetail(MongoIntegrationBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
-class TestPatchInstanceDetail(MongoIntegrationBaseTestCase):
+class TestPatchInstanceDetail(IntegrationBaseTestCase):
     """Test Patch Instance Detail"""
 
     fixture = fixture_data
