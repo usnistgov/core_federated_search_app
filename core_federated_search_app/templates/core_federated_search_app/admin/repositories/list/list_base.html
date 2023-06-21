@@ -1,4 +1,5 @@
 {% extends 'core_main_app/_render/admin/theme/tools/box.html' %}
+{% load tz %}
 
 {% block box_title %}List all repositories{% endblock %}
 
@@ -25,7 +26,7 @@
             <tr class="{{ rowcolors }}">
                 <td>{{ instance.name }}</td>
                 <td>{{ instance.endpoint }}</td>
-                <td>{{ instance.expires }}</td>
+                <td>{{ instance.expires|localtime }}</td>
                 <td id="{{ instance.id }}">
                     {% block box_actions %}
                         {% url 'core-admin:core_federated_search_app_repositories_edit' instance.id as edit_url %}
