@@ -11,7 +11,7 @@
     <div id="error-div">
         <br/>
         <div class="alert alert-danger alert-dismissable">
-            <a href="#" {% if BOOTSTRAP_VERSION|first == "4" %}class="close" data-dismiss="alert"{% elif BOOTSTRAP_VERSION|first == "5"  %}class="btn-close" data-bs-dismiss="alert"{% endif %} aria-label="close">{% if BOOTSTRAP_VERSION|first == "4" %}&times;{% elif BOOTSTRAP_VERSION|first == "5"  %}{% endif %}</a>
+            <a href="#" {% if BOOTSTRAP_VERSION|first == "4" %}class="close" data-dismiss="alert"{% elif BOOTSTRAP_VERSION|first == "5"  %}class="btn-close float-end" data-bs-dismiss="alert"{% endif %} aria-label="close">{% if BOOTSTRAP_VERSION|first == "4" %}&times;{% elif BOOTSTRAP_VERSION|first == "5"  %}{% endif %}</a>
             <strong><span id="error-message"></span></strong>
         </div>
     </div>
