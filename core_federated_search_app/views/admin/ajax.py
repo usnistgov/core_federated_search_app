@@ -41,7 +41,7 @@ class EditRepositoryView(EditObjectModalView):
     success_url = reverse_lazy(
         "core-admin:core_federated_search_app_repositories"
     )
-    success_message = "Repository edited with success."
+    success_message = "Repository edited."
 
     def _save(self, form):
         # Save treatment.
