@@ -65,20 +65,21 @@ def add_repository(request):
 
     """
     context = {}
-    new_form = False
     if request.method == "POST":
         form = RepositoryForm(request.POST)
+
         context["repository_form"] = form
         if form.is_valid():
             try:
                 instance_object = api_instance.add_instance(
-                    request.POST["name"],
-                    request.POST["endpoint"],
-                    request.POST["client_id"],
-                    request.POST["client_secret"],
-                    request.POST["username"],
-                    request.POST["password"],
-                    request.POST["timeout"],
+                    form.data["name"],
+                    form.data["endpoint"],
+                    bool(form.data.get("is_private_repo", None)),
+                    form.data["client_id"],
+                    form.data["client_secret"],
+                    form.data["username"],
+                    form.data["password"],
+                    form.data["timeout"],
                 )
                 if instance_object is not None:
                     return HttpResponseRedirect(
@@ -94,17 +95,26 @@ def add_repository(request):
                 context["error"] = "Unable to reach the remote HTTPS instance."
             except Exception as api_exception:
                 context["error"] = str(api_exception)
+        else:
+            context["error"] = "The form entered is not valid."
     else:
-        new_form = True
-
-    if new_form:
         # render the form to upload a template
         context["repository_form"] = RepositoryForm()
+
+    assets = {
+        "js": [
+            {
+                "path": "core_federated_search_app/admin/js/repositories/add/form.js",
+                "is_raw": False,
+            },
+        ],
+        "css": ["core_federated_search_app/admin/css/add/form.css"],
+    }
 
     return admin_render(
         request,
         "core_federated_search_app/admin/repositories/add_repository.html",
-        assets=None,
+        assets=assets,
         context=context,
         modals=None,
     )

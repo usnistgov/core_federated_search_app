@@ -6,11 +6,11 @@ from urllib.parse import urlparse
 from core_explore_common_app.utils.protocols.oauth2 import (
     post_request_token,
     post_refresh_token,
+    send_get_request as send_get_request_with_token,
 )
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.commons.exceptions import ApiError
 from core_main_app.utils.datetime import datetime_now, datetime_timedelta
-from core_main_app.utils.requests_utils import requests_utils
 
 
 def get_all():
@@ -84,13 +84,21 @@ def upsert(instance):
 
 
 def add_instance(
-    name, endpoint, client_id, client_secret, username, password, timeout
+    name,
+    endpoint,
+    is_private_repo,
+    client_id,
+    client_secret,
+    username,
+    password,
+    timeout,
 ):
     """Request the remote and add the instance created.
 
     Args:
         name:
         endpoint:
+        is_private_repo:
         client_id:
         client_secret:
         username:
@@ -102,27 +110,29 @@ def add_instance(
     """
     try:
         # parse the endpoint
-        endpoint = urlparse(endpoint).geturl().strip("/")
+        endpoint_url = urlparse(endpoint).geturl().strip("/")
     except Exception:
         raise ApiError("Endpoint is not well formatted.")
 
-    # delete extra white space
-    name = name.strip()
+    name = name.strip()  # Cleanup the instance name.
 
     # Request the remote
-    response = post_request_token(
-        endpoint, client_id, client_secret, timeout, username, password
-    )
-
-    if response.status_code != 200:
-        raise ApiError(
-            "Unable to get access to the remote instance using these parameters."
+    if is_private_repo:
+        response = post_request_token(
+            endpoint_url, client_id, client_secret, timeout, username, password
         )
 
-    # create the instance from a request
-    instance = _create_instance_object_from_request_response(
-        name, endpoint, response.content
-    )
+        if response.status_code != 200:
+            raise ApiError(
+                "Unable to get access to the remote instance using these parameters."
+            )
+
+        # create the instance from a request
+        instance = _create_instance_object_from_request_response(
+            name, endpoint_url, response.content
+        )
+    else:
+        instance = Instance(name=name, endpoint=endpoint_url)
 
     # upsert the instance
     upsert(instance)
@@ -179,7 +189,7 @@ def get_blob_response_from_url(url_base, url):
     instance = get_by_endpoint_starting_with(url_base)
     if instance.endpoint in url:
         # here we are sure that our given url is one of our known instances
-        return requests_utils.send_get_request_with_access_token(
+        return send_get_request_with_token(
             url=url, access_token=instance.access_token
         )
 

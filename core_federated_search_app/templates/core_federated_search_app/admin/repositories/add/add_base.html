@@ -6,9 +6,8 @@
     {% if data.error %}
       <div class="alert alert-danger alert-dismissable">
         <a href="#" {% if BOOTSTRAP_VERSION|first == "4" %}class="close" data-dismiss="alert"{% elif BOOTSTRAP_VERSION|first == "5"  %}class="btn-close float-end" data-bs-dismiss="alert"{% endif %} aria-label="close">{% if BOOTSTRAP_VERSION|first == "4" %}&times;{% elif BOOTSTRAP_VERSION|first == "5"  %} {% endif %}</a>
-        <strong>{{ data.error }}</strong>
+        <strong>{{ data.error | safe }}</strong>
       </div>
-      <br/>
     {% endif %}
 
     {% if data.success %}
@@ -16,16 +15,25 @@
         <a href="#" {% if BOOTSTRAP_VERSION|first == "4" %}class="close" data-dismiss="alert"{% elif BOOTSTRAP_VERSION|first == "5"  %}class="btn-close" data-bs-dismiss="alert"{% endif %} aria-label="close">{% if BOOTSTRAP_VERSION|first == "4" %}&times;{% elif BOOTSTRAP_VERSION|first == "5"  %}{% endif %}</a>
         <strong>{{ data.success }}</strong>
       </div>
-      <br/>
     {% endif %}
 
     <form id="form_add_repository" action="{{ url }}" method="post" enctype=multipart/form-data>
-      {% csrf_token %}
-      {{ data.repository_form }}
-      <br/>
-      <button type="submit" class="btn btn-primary {% if BOOTSTRAP_VERSION|first == "4" %}float-right{% elif BOOTSTRAP_VERSION|first == "5"  %}float-end{% endif %} mt-3">
-          <i class="fas fa-plus"></i> Add Repository
-      </button>
+        {% csrf_token %}
+        {% for field in data.repository_form %}
+            <div class="form-field">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+                <div class="alert alert-danger alert-danger-field">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit"
+                class="btn btn-primary {% if BOOTSTRAP_VERSION|first == "4" %}float-right{% elif BOOTSTRAP_VERSION|first == "5"  %}float-end{% endif %} mt-3">
+            <i class="fas fa-plus"></i> Add Repository
+        </button>
     </form>
 {% endblock %}
 

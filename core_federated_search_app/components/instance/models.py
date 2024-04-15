@@ -1,11 +1,15 @@
 """ Instance model
 """
+import logging
 from core_main_app.commons import exceptions
 from core_main_app.commons.regex import NOT_EMPTY_OR_WHITESPACES
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import RegexValidator
 from django.db import models, IntegrityError
+
+
+logger = logging.getLogger(__name__)
 
 
 class Instance(models.Model):
@@ -24,9 +28,9 @@ class Instance(models.Model):
         max_length=200,
     )
     endpoint = models.URLField(blank=False, unique=True)
-    access_token = models.CharField(blank=False, max_length=200)
-    refresh_token = models.CharField(blank=False, max_length=200)
-    expires = models.DateTimeField(blank=False)
+    access_token = models.CharField(blank=True, null=True, max_length=200)
+    refresh_token = models.CharField(blank=True, null=True, max_length=200)
+    expires = models.DateTimeField(blank=True, null=True)
 
     @staticmethod
     def get_all():
@@ -103,11 +107,19 @@ class Instance(models.Model):
         try:
             self.check_instance_name()
             return self.save()
-        except IntegrityError:
+        except IntegrityError as integrity_error:
+            logging.error(
+                "An integrity error occurred while saving the instance: %s",
+                str(integrity_error),
+            )
             raise exceptions.NotUniqueError(
                 "Unable to create the new repository: Not Unique"
             )
         except Exception as ex:
+            logging.error(
+                "An exception occurred while saving the instance: %s",
+                str(ex),
+            )
             raise exceptions.ModelError(str(ex))
 
     def check_instance_name(self):
@@ -127,7 +139,7 @@ class Instance(models.Model):
         Returns:
 
         """
-        self.name = self.name.strip()
+        self.name = str(self.name).strip()
 
     def __str__(self):
         """Instance object as string.
