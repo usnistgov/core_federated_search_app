@@ -54,7 +54,9 @@ class RepositoryForm(forms.Form):
         label="Client Secret",
         max_length=100,
         required=False,
-        widget=forms.TextInput(attrs={"class": "form-control private-repo"}),
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control private-repo"}
+        ),
     )
     timeout = forms.IntegerField(
         label="Timeout (s)",
