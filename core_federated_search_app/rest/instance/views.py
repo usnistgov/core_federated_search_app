@@ -1,5 +1,6 @@
 """ REST Views for Instance object
 """
+
 from core_main_app.commons import exceptions
 from django.http import Http404
 from rest_framework import status

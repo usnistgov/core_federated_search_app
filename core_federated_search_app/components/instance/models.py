@@ -1,5 +1,6 @@
 """ Instance model
 """
+
 import logging
 from core_main_app.commons import exceptions
 from core_main_app.commons.regex import NOT_EMPTY_OR_WHITESPACES

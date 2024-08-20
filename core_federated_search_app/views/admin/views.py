@@ -1,5 +1,6 @@
 """ Admin views Core explore Federated Search App
 """
+
 import core_main_app.commons.exceptions as common_exception
 from core_main_app.utils.rendering import admin_render
 from core_main_app.views.common.ajax import EditTemplateVersionManagerView
@@ -88,9 +89,9 @@ def add_repository(request):
                         )
                     )
             except common_exception.NotUniqueError:
-                context[
-                    "error"
-                ] = "An instance with the same parameters already exists."
+                context["error"] = (
+                    "An instance with the same parameters already exists."
+                )
             except SSLError:
                 context["error"] = "Unable to reach the remote HTTPS instance."
             except Exception as api_exception:

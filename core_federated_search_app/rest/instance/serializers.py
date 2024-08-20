@@ -1,5 +1,6 @@
 """ Instance Serializers
 """
+
 from rest_framework.fields import CharField, IntegerField
 from rest_framework.serializers import ModelSerializer
 

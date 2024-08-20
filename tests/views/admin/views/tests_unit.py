@@ -1,5 +1,6 @@
 """ Unit tests for `core_federated_search_app.views.admin.views` package.
 """
+
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 

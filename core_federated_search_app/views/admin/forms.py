@@ -1,5 +1,6 @@
 """ Django forms of ADMIN core explore federated search
 """
+
 from core_main_app.commons.validators import BlankSpacesValidator
 from django import forms
 from django.forms import ModelForm

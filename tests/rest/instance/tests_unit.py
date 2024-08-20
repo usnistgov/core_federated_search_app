@@ -1,5 +1,6 @@
 """Units tests for xsl Instance rest api
 """
+
 from unittest.mock import patch
 
 from core_main_app.utils.tests_tools.MockUser import create_mock_user

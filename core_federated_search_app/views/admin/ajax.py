@@ -1,5 +1,6 @@
 """ Ajax admin
 """
+
 import json
 
 from core_main_app.views.common.ajax import EditObjectModalView

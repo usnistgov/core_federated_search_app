@@ -1,5 +1,6 @@
 """ Widget utilities for forms.
 """
+
 from django.forms.widgets import CheckboxInput
 
 

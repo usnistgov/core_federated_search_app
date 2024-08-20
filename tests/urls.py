@@ -1,5 +1,6 @@
 """ Url router for the administration site
 """
+
 from django.urls import re_path
 
 from core_federated_search_app.views.admin import (

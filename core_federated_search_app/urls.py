@@ -1,5 +1,6 @@
 """ Url router for the federated search application
 """
+
 from django.conf.urls import include
 from django.urls import re_path
 

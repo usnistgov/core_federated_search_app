@@ -1,5 +1,6 @@
 """ Url router for the administration site
 """
+
 from core_main_app.admin import core_admin_site
 from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
