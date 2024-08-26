@@ -12,6 +12,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sites",
     "django_celery_beat",
+    # Third-party apps
+    "oauth2_provider",
     # Local apps
     "core_main_app",
     "core_explore_common_app",

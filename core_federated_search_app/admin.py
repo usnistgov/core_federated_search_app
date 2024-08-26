@@ -1,16 +1,27 @@
 """ Url router for the administration site
 """
 
-from core_main_app.admin import core_admin_site
 from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import re_path
+from oauth2_provider.models import (
+    get_application_model,
+    get_grant_model,
+    get_id_token_model,
+    get_access_token_model,
+    get_refresh_token_model,
+)
 
 from core_federated_search_app.components.instance.models import Instance
+from core_federated_search_app.utils.model_admin import (
+    OAuth2ApplicationAdmin,
+    ReadOnlyModelAdmin,
+)
 from core_federated_search_app.views.admin import (
     views as admin_views,
     ajax as admin_ajax,
 )
+from core_main_app.admin import core_admin_site
 
 admin_urls = [
     re_path(
@@ -41,5 +52,22 @@ admin_urls = [
 ]
 
 admin.site.register(Instance)
+
+# Remove unused django-oauth-toolkit models.
+admin.site.unregister(get_id_token_model())
+admin.site.unregister(get_grant_model())
+
+# Register django-oauth-toolkit `Application` with appropriate model admin.
+admin.site.unregister(get_application_model())
+admin.site.register(get_application_model(), OAuth2ApplicationAdmin)
+
+# Register django-oauth-toolkit `AccessToken` with appropriate model admin.
+admin.site.unregister(get_access_token_model())
+admin.site.register(get_access_token_model(), ReadOnlyModelAdmin)
+
+# Register django-oauth-toolkit `RefreshToken` with appropriate model admin.
+admin.site.unregister(get_refresh_token_model())
+admin.site.register(get_refresh_token_model(), ReadOnlyModelAdmin)
+
 urls = core_admin_site.get_urls()
 core_admin_site.get_urls = lambda: admin_urls + urls

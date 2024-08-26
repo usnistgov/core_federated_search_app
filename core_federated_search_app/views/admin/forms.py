@@ -6,7 +6,7 @@ from django import forms
 from django.forms import ModelForm
 
 from core_federated_search_app.components.instance.models import Instance
-from core_federated_search_app.utils import widget
+from core_federated_search_app.utils import widgets
 
 # list of possible protocols available in the form
 PROTOCOLS = (("http", "HTTP"), ("https", "HTTPS"))
@@ -30,7 +30,7 @@ class RepositoryForm(forms.Form):
     is_private_repo = forms.BooleanField(
         label="Private repository",
         required=False,
-        widget=widget.ToggleButton(),
+        widget=widgets.ToggleButton(),
     )
     username = forms.CharField(
         label="Username",
