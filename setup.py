@@ -37,7 +37,7 @@ chdir(normpath(join(abspath(__file__), pardir)))
 
 setup(
     name="core_federated_search_app",
-    version="2.12.0",
+    version="2.13.0",
     description="Federated search backend for the curator core project",
     long_description=long_desc,
     author="NIST IT Lab",
