@@ -1,8 +1,14 @@
 """ REST Views for Instance object
 """
 
-from core_main_app.commons import exceptions
 from django.http import Http404
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiExample,
+    OpenApiParameter,
+    OpenApiResponse,
+)
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAdminUser
@@ -14,22 +20,31 @@ from core_federated_search_app.rest.instance.serializers import (
     InstanceSerializerCreate,
     InstanceSerializerModel,
 )
+from core_main_app.commons import exceptions
 
 
+@extend_schema(
+    tags=["Federated Instance"],
+    description="List all Instances, or create a new Instance",
+)
 class InstanceList(APIView):
     """List all Instances, or create a new Instance"""
 
     permission_classes = (IsAdminUser,)
 
+    @extend_schema(
+        summary="Get all instances",
+        description="Get all Instances",
+        responses={
+            200: InstanceSerializerModel(many=True),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+    )
     def get(self, request):
         """Return http response with all Instances
-
         Args:
-
             request: HTTP request
-
         Returns:
-
             - code: 200
               content: List of Instances
             - code: 500
@@ -38,12 +53,10 @@ class InstanceList(APIView):
         try:
             # Get object
             instance_object_list = instance_api.get_all()
-
             # Serialize object
             return_value = InstanceSerializerModel(
                 instance_object_list, many=True
             )
-
             # Return response
             return Response(return_value.data)
         except Exception as api_exception:
@@ -52,27 +65,47 @@ class InstanceList(APIView):
                 content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+    @extend_schema(
+        summary="Create a new instance",
+        description="Save an Instance",
+        request=InstanceSerializerCreate,
+        responses={
+            201: InstanceSerializerCreate,
+            400: OpenApiResponse(description="Validation error"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+        examples=[
+            OpenApiExample(
+                "Example request",
+                summary="Example request body",
+                description="Example request body for creating an instance",
+                value={
+                    "name": "instance_name",
+                    "endpoint": "url",
+                    "client_id": "my_client_id",
+                    "client_secret": "my_client_secret",
+                    "timeout": "1",
+                    "username": "usr",
+                    "password": "pwd",
+                },
+            ),
+        ],
+    )
     def post(self, request):
         """Save an Instance
-
         Parameters:
-
             {
-                "name": "instance_name",
-                "endpoint": "url",
-                "client_id": "my_client_id",
-                "client_secret": "my_client_secret",
-                "timeout": "1",
-                "username": "usr",
-                "password": "pwd"
+              "name": "instance_name",
+              "endpoint": "url",
+              "client_id": "my_client_id",
+              "client_secret": "my_client_secret",
+              "timeout": "1",
+              "username": "usr",
+              "password": "pwd"
             }
-
         Args:
-
             request: HTTP request
-
         Returns:
-
             - code: 201
               content: Created Instance
             - code: 400
@@ -100,20 +133,20 @@ class InstanceList(APIView):
             )
 
 
+@extend_schema(
+    tags=["Federated Instance"],
+    description="Retrieve, edit or delete an Instance",
+)
 class InstanceDetail(APIView):
-    """ " Retrieve, edit or delete an Instance"""
+    """Retrieve, edit or delete an Instance"""
 
     permission_classes = (IsAdminUser,)
 
     def get_object(self, pk):
         """Retrieve an Instance
-
         Args:
-
             pk: ObjectId
-
         Returns:
-
             Instance
         """
         try:
@@ -121,16 +154,29 @@ class InstanceDetail(APIView):
         except exceptions.DoesNotExist:
             raise Http404
 
+    @extend_schema(
+        summary="Retrieve an instance",
+        description="Retrieve an Instance",
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.PATH,
+                description="Instance ID",
+            ),
+        ],
+        responses={
+            200: InstanceSerializerModel,
+            404: OpenApiResponse(description="Object was not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+    )
     def get(self, request, pk):
         """Get Instance
-
         Args:
-
             request: HTTP request
             pk: ObjectId
-
         Returns:
-
             - code: 200
               content: Instance
             - code: 404
@@ -154,22 +200,43 @@ class InstanceDetail(APIView):
                 content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+    @extend_schema(
+        summary="Update an instance",
+        description="Update the Instance",
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.PATH,
+                description="Instance ID",
+            ),
+        ],
+        request=InstanceSerializerModel,
+        responses={
+            200: InstanceSerializerModel,
+            400: OpenApiResponse(description="Validation error"),
+            404: OpenApiResponse(description="Object was not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+        examples=[
+            OpenApiExample(
+                "Example request",
+                summary="Example request body",
+                description="Example request body for updating an instance",
+                value={"name": "name"},
+            ),
+        ],
+    )
     def patch(self, request, pk):
         """Update the Instance
-
         Parameters:
-
             {
-                "name": "name"
+              "name": "name"
             }
-
         Args:
-
             request: HTTP request
             pk: ObjectId
-
         Returns:
-
             - code: 200
               content: Updated Instance
             - code: 400
@@ -206,16 +273,29 @@ class InstanceDetail(APIView):
                 content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+    @extend_schema(
+        summary="Delete an instance",
+        description="Delete Instance",
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.PATH,
+                description="Instance ID",
+            ),
+        ],
+        responses={
+            204: None,
+            404: OpenApiResponse(description="Object was not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+    )
     def delete(self, request, pk):
         """Delete Instance
-
         Args:
-
             request: HTTP request
             pk: ObjectId
-
         Returns:
-
             - code: 204
               content: Deletion succeed
             - code: 404
@@ -240,20 +320,20 @@ class InstanceDetail(APIView):
             )
 
 
+@extend_schema(
+    tags=["Federated Instance"],
+    description="Refresh of token an Instance",
+)
 class InstanceRefreshToken(APIView):
-    """ " Refresh of token an Instance"""
+    """Refresh of token an Instance"""
 
     permission_classes = (IsAdminUser,)
 
     def get_object(self, pk):
         """Retrieve an Instance
-
         Args:
-
             pk: ObjectId
-
         Returns:
-
             Instance
         """
         try:
@@ -261,24 +341,48 @@ class InstanceRefreshToken(APIView):
         except exceptions.DoesNotExist:
             raise Http404
 
+    @extend_schema(
+        summary="Refresh token of an instance",
+        description="Refresh token of an Instance",
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.PATH,
+                description="Instance ID",
+            ),
+        ],
+        request=OpenApiTypes.OBJECT,
+        responses={
+            200: InstanceSerializerModel,
+            404: OpenApiResponse(description="Object was not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+        examples=[
+            OpenApiExample(
+                "Example request",
+                summary="Example request body",
+                description="Example request body for refreshing an instance token",
+                value={
+                    "client_id": "my_client_id",
+                    "client_secret": "my_client_secret",
+                    "timeout": "1",
+                },
+            ),
+        ],
+    )
     def patch(self, request, pk):
         """Refresh token of an Instance
-
         Parameters:
-
             {
-                "client_id": "my_client_id",
-                "client_secret": "my_client_secret",
-                "timeout": "1"
+              "client_id": "my_client_id",
+              "client_secret": "my_client_secret",
+              "timeout": "1"
             }
-
         Args:
-
             request: HTTP request
             pk: ObjectId
-
         Returns:
-
             - code: 200
               content: Updated Instance
             - code: 404
@@ -289,7 +393,6 @@ class InstanceRefreshToken(APIView):
         try:
             # Get object
             instance_object = self.get_object(pk)
-
             # refresh the token
             instance_object = instance_api.refresh_instance_token(
                 instance_object,
