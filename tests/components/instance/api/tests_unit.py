@@ -140,7 +140,7 @@ class TestUpdateInstanceTokenFromResponse(TestCase):
         instance_api._update_instance_token_from_response(
             mock_instance, mock_response
         )
-        self.assertTrue(mock_upsert.called_with(mock_instance))
+        mock_upsert.assert_called_with(mock_instance)
 
 
 class TestAddInstance(TestCase):
