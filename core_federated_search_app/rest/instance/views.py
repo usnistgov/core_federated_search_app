@@ -1,5 +1,4 @@
-""" REST Views for Instance object
-"""
+"""REST Views for Instance object"""
 
 from django.http import Http404
 from drf_spectacular.types import OpenApiTypes

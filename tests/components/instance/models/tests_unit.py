@@ -1,5 +1,4 @@
-""" Unit tests for `core_federated_search_app.components.instance.models` package.
-"""
+"""Unit tests for `core_federated_search_app.components.instance.models` package."""
 
 from unittest import TestCase
 from unittest.mock import patch, MagicMock

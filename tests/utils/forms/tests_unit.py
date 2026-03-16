@@ -1,5 +1,4 @@
-""" Unit tests for `utils.forms` package.
-"""
+"""Unit tests for `utils.forms` package."""
 
 from unittest import TestCase
 from unittest.mock import patch

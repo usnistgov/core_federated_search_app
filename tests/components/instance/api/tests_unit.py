@@ -1,5 +1,4 @@
-""" Unit tests for `core_federated_search_app.components.api` package.
-"""
+"""Unit tests for `core_federated_search_app.components.api` package."""
 
 from core_main_app.commons.exceptions import ApiError
 import json

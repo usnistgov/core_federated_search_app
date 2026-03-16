@@ -1,5 +1,4 @@
-""" Unit tests for `utils.model_admin` package.
-"""
+"""Unit tests for `utils.model_admin` package."""
 
 from unittest import TestCase
 from unittest.mock import MagicMock

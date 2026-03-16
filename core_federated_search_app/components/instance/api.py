@@ -1,5 +1,4 @@
-""" Instance api
-"""
+"""Instance api"""
 
 import json
 from urllib.parse import urlparse

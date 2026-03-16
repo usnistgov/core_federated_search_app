@@ -1,5 +1,4 @@
-"""Units tests for xsl Instance rest api
-"""
+"""Units tests for xsl Instance rest api"""
 
 from unittest.mock import patch
 

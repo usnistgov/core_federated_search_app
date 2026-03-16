@@ -1,5 +1,4 @@
-""" Instance model
-"""
+"""Instance model"""
 
 import logging
 from core_main_app.commons import exceptions
@@ -8,7 +7,6 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import RegexValidator
 from django.db import models, IntegrityError
-
 
 logger = logging.getLogger(__name__)
 

@@ -1,9 +1,7 @@
-""" Federated search menu
-"""
+"""Federated search menu"""
 
 from django.urls import reverse
 from menu import Menu, MenuItem
-
 
 federated_children = (
     MenuItem(

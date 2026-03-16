@@ -1,5 +1,4 @@
-""" Authentication tests for Instance REST API
-"""
+"""Authentication tests for Instance REST API"""
 
 from unittest.mock import patch
 

@@ -1,5 +1,4 @@
-""" Ajax admin
-"""
+"""Ajax admin"""
 
 import json
 

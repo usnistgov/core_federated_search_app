@@ -1,5 +1,4 @@
-""" Widget utilities for forms.
-"""
+"""Widget utilities for forms."""
 
 from django.contrib.admin.widgets import ForeignKeyRawIdWidget
 from django.forms.widgets import CheckboxInput, Widget

@@ -1,5 +1,4 @@
-""" Model forms for definining admin GUI.
-"""
+"""Model forms for definining admin GUI."""
 
 from django.contrib import admin
 from django import forms

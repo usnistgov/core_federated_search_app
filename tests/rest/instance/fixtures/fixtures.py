@@ -1,5 +1,4 @@
-""" Fixtures files for Instance
-"""
+"""Fixtures files for Instance"""
 
 from core_federated_search_app.components.instance.models import Instance
 from core_main_app.utils.datetime import datetime_now

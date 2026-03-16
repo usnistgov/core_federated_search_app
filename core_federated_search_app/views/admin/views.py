@@ -1,5 +1,4 @@
-""" Admin views Core explore Federated Search App
-"""
+"""Admin views Core explore Federated Search App"""
 
 import core_main_app.commons.exceptions as common_exception
 from core_main_app.utils.rendering import admin_render

@@ -1,5 +1,4 @@
-""" Core Federated search exceptions
-"""
+"""Core Federated search exceptions"""
 
 
 class ExploreFederatedSearchAjaxError(Exception):
